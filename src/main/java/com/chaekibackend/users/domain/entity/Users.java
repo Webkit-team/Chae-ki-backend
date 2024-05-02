@@ -1,0 +1,20 @@
+package com.chaekibackend.users.domain.entity;
+
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+
+@Entity
+@Table(name = "users")
+@NoArgsConstructor @AllArgsConstructor
+@Getter
+@Builder
+public class Users {
+    @Id @GeneratedValue
+    private long id;
+}
