@@ -1,9 +1,7 @@
 package com.chaekibackend.users.domain.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import com.chaekibackend.users.api.request.UsersRequest;
+import jakarta.persistence.*;
 import lombok.*;
 
 @Entity
