@@ -10,6 +10,38 @@ import lombok.*;
 @Getter
 @Builder
 public class Users {
-    @Id @GeneratedValue
-    private long id;
+    @Id
+    @GeneratedValue
+    private Long id;
+
+    @Column(unique = true)
+    @Setter
+    private String userId;
+
+    private String password;
+
+    private String nickname;
+
+    private String role;
+
+    private Integer point;
+
+    private String imageString;
+
+    private Integer totalReadingTime;
+
+    private Integer reportCount;
+
+    public static Users from (UsersRequest.Create user) {
+        return Users.builder()
+                .userId(user.getUserId())
+                .password(user.getPassword())
+                .nickname(user.getNickname())
+                .imageString(user.getImageString())
+                .role("USER")
+                .point(0)
+                .totalReadingTime(0)
+                .reportCount(0)
+                .build();
+    }
 }
