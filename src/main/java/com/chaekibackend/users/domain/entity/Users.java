@@ -1,8 +1,14 @@
 package com.chaekibackend.users.domain.entity;
 
+import com.chaekibackend.book.domain.entity.BookReview;
+import com.chaekibackend.book.domain.entity.BookReviewScrap;
+import com.chaekibackend.book.domain.entity.LikeBook;
+import com.chaekibackend.chellenge.domain.entity.ChallengeMember;
 import com.chaekibackend.users.api.request.UsersRequest;
 import jakarta.persistence.*;
 import lombok.*;
+
+import java.util.List;
 
 @Entity
 @Table(name = "users")
@@ -26,18 +32,26 @@ public class Users {
 
     private Integer point;
 
-    private String imageString;
-
     private Integer totalReadingTime;
 
     private Integer reportCount;
-
+    @OneToOne
+    private UserImage userImage;
+    @OneToMany
+    private List<ChallengeMember> challengeList;
+    @OneToMany
+    private List<LikeBook> likeList;
+    @OneToMany
+    private List<BookReview> reviewList;
+    @OneToMany
+    private List<BookReviewScrap> scrapList;
+    @OneToMany
+    private List<Coupon> couponList;
     public static Users from (UsersRequest.Create user) {
         return Users.builder()
                 .username(user.getUsername())
                 .password(user.getPassword())
                 .nickname(user.getNickname())
-                .imageString(user.getImageString())
                 .role("USER")
                 .point(0)
                 .totalReadingTime(0)
