@@ -1,7 +1,2 @@
-package com.chaekibackend.chellenge.domain.interfaces;
-
-import org.springframework.stereotype.Repository;
-
-@Repository
-public class ChallengeRepository {
+package com.chaekibackend.chellenge.domain.interfaces;public interface ChallengeRepository {
 }
