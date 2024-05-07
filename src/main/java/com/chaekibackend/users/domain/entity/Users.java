@@ -12,7 +12,7 @@ import lombok.*;
 public class Users {
     @Id
     @GeneratedValue
-    private Long id;
+    private Long no;
 
     @Column(unique = true)
     @Setter
