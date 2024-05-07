@@ -11,12 +11,12 @@ public class UsersResponse {
     @Getter
     public static class Create {
         private Long uno;
-        private String userId;
+        private String username;
 
         public static UsersResponse.Create from(Users user) {
             return Create.builder()
                     .uno(user.getId())
-                    .userId(user.getUserId())
+                    .username(user.getUsername())
                     .build();
         }
     }
@@ -26,12 +26,14 @@ public class UsersResponse {
     @Getter
     public static class Login {
         private Long uno;
-        private String userId;
+        private String username;
+        private String role;
 
         public static Login from(Users findUser) {
             return Login.builder()
                     .uno(findUser.getId())
-                    .userId(findUser.getUserId())
+                    .username(findUser.getUsername())
+                    .role(findUser.getRole())
                     .build();
         }
     }

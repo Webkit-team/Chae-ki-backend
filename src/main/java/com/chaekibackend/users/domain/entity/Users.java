@@ -16,7 +16,7 @@ public class Users {
 
     @Column(unique = true)
     @Setter
-    private String userId;
+    private String username;
 
     private String password;
 
@@ -34,7 +34,7 @@ public class Users {
 
     public static Users from (UsersRequest.Create user) {
         return Users.builder()
-                .userId(user.getUserId())
+                .username(user.getUsername())
                 .password(user.getPassword())
                 .nickname(user.getNickname())
                 .imageString(user.getImageString())
