@@ -31,6 +31,7 @@ public class Challenge {
 
     @ManyToOne
     private Book book;
+
     @OneToMany
     private List<ChaekiWeek> weekList;
     @OneToMany
