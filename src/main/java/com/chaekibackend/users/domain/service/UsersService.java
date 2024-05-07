@@ -15,7 +15,7 @@ public class UsersService {
 
     public Users signup(UsersRequest.Create user) {
         UsersRequest.Create encoded = UsersRequest.Create.builder()
-                .userId(user.getUserId())
+                .username(user.getUsername())
                 .password(passwordEncoder.encode(user.getPassword()))
                 .nickname(user.getNickname())
                 .imageString(user.getImageString())

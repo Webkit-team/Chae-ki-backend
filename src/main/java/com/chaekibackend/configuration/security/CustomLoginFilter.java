@@ -33,7 +33,6 @@ public class CustomLoginFilter extends UsernamePasswordAuthenticationFilter {
         //클라이언트 요청에서 username, password 추출
         String username = obtainUsername(request);
         String password = obtainPassword(request);
-        log.info("유저네임 : " + username);
         //스프링 시큐리티에서 username과 password를 검증하기 위해서는 token에 담아야 함
         UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(username, password, null);
 
@@ -60,7 +59,7 @@ public class CustomLoginFilter extends UsernamePasswordAuthenticationFilter {
         response.setCharacterEncoding("utf-8");
         
         // 로그인 응답 dto 생성 후 응답 body 담기
-        Users findUser = userRepository.findByUserId(username);
+        Users findUser = userRepository.findByUsername(username);
         UsersResponse.Login responseDto = UsersResponse.Login.from(findUser);
         String json = objectMapper.writeValueAsString(responseDto);
         response.getOutputStream().println(json);

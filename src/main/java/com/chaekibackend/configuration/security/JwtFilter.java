@@ -53,7 +53,7 @@ public class JwtFilter extends OncePerRequestFilter {
 
         //Users 엔티티 생성
         Users user = Users.builder()
-                .userId(username)
+                .username(username)
                 .role(role)
                 .build();
 
