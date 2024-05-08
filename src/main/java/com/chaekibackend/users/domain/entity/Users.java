@@ -21,11 +21,12 @@ public class Users {
     private Long no;
 
     @Column(unique = true)
-    @Setter
     private String username;
 
+    @Setter
     private String password;
 
+    @Setter
     private String nickname;
 
     private String role;
@@ -35,18 +36,28 @@ public class Users {
     private Integer totalReadingTime;
 
     private Integer reportCount;
+
+    @Setter
+    private Boolean expired;
+
     @OneToOne
     private UserImage userImage;
+
     @OneToMany
     private List<ChallengeMember> challengeList;
+
     @OneToMany
     private List<LikeBook> likeList;
+
     @OneToMany
     private List<BookReview> reviewList;
+
     @OneToMany
     private List<BookReviewScrap> scrapList;
+
     @OneToMany
     private List<Coupon> couponList;
+
     public static Users from (UsersRequest.Create user) {
         return Users.builder()
                 .username(user.getUsername())
@@ -56,6 +67,7 @@ public class Users {
                 .point(0)
                 .totalReadingTime(0)
                 .reportCount(0)
+                .expired(false)
                 .build();
     }
 }

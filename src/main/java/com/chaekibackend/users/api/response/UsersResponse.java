@@ -10,6 +10,23 @@ public class UsersResponse {
     @Builder
     @AllArgsConstructor
     @Getter
+    @Schema(name = "UsersResponse.Delete")
+    public static class Delete {
+        private Long no;
+        private String username; // user id
+
+        public static UsersResponse.Delete from(Users user) {
+            return UsersResponse.Delete.builder()
+                    .no(user.getNo())
+                    .username(user.getUsername())
+                    .build();
+        }
+    }
+
+    @Builder
+    @AllArgsConstructor
+    @Getter
+    @Schema(name = "UsersResponse.Update")
     public static class Update {
         private Long no;
         private String username; // user id
@@ -21,7 +38,7 @@ public class UsersResponse {
                     .no(user.getNo())
                     .username(user.getUsername())
                     .nickname(user.getNickname())
-                    .imageString(user.getImageString())
+                    .imageString(user.getImageUrl())
                     .build();
         }
     }
@@ -45,6 +62,7 @@ public class UsersResponse {
     @Builder
     @AllArgsConstructor
     @Getter
+    @Schema(name = "UsersResponse.Login")
     public static class Login {
         private Long no;
         private String username;
