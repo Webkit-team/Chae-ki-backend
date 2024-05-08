@@ -38,6 +38,9 @@ public class Users {
     private Integer reportCount;
 
     @Setter
+    private String imageUrl;
+
+    @Setter
     private Boolean expired;
 
     @OneToOne
