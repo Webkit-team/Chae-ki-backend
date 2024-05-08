@@ -21,7 +21,6 @@ public class UsersRequest {
     @Getter
     @AllArgsConstructor
     @Schema(name = "UsersRequest.Create")
-    @ToString
     public static class Create {
         private String username;
         private String password;

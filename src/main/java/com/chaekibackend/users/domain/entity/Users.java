@@ -34,6 +34,9 @@ public class Users {
 
     private Integer reportCount;
 
+    @Setter
+    private Boolean expired;
+
     public static Users from (UsersRequest.Create user) {
         return Users.builder()
                 .username(user.getUsername())
@@ -44,6 +47,7 @@ public class Users {
                 .point(0)
                 .totalReadingTime(0)
                 .reportCount(0)
+                .expired(false)
                 .build();
     }
 }
