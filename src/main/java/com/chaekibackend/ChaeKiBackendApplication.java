@@ -7,6 +7,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class ChaeKiBackendApplication {
 
     public static void main(String[] args) {
+//        요청 -> 응답(책)
         SpringApplication.run(ChaeKiBackendApplication.class, args);
     }
 

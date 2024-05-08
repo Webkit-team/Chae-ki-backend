@@ -9,11 +9,13 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
@@ -44,9 +46,8 @@ public class SecurityConfig {
         http.formLogin(AbstractHttpConfigurer::disable); // form 안 쓰고, api 방식으로 할 거라서
         http.httpBasic(AbstractHttpConfigurer::disable); // header에 아이디,비번 안 넣고, jwt 사용할 거라서
         http.authorizeHttpRequests(auth -> auth // 경로마다 인가 작업
-                .requestMatchers(HttpMethod.POST, "/signup").permitAll()
+                .requestMatchers("/signup").permitAll()
                 .requestMatchers("/login", "/", "/swagger-ui/**", "/v3/api-docs/**").permitAll()
-                .requestMatchers(HttpMethod.GET, "/posts").permitAll()
                 .anyRequest().authenticated());
         http.sessionManagement(session -> session // 세션을 비상태로 설정
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS));

@@ -15,18 +15,20 @@ public class Users {
     private Long no;
 
     @Column(unique = true)
-    @Setter
     private String username;
 
+    @Setter
     private String password;
 
+    @Setter
     private String nickname;
 
     private String role;
 
     private Integer point;
 
-    private String imageString;
+    @Setter
+    private String imageUrl;
 
     private Integer totalReadingTime;
 
@@ -37,7 +39,7 @@ public class Users {
                 .username(user.getUsername())
                 .password(user.getPassword())
                 .nickname(user.getNickname())
-                .imageString(user.getImageString())
+                .imageUrl(user.getImageUrl())
                 .role("USER")
                 .point(0)
                 .totalReadingTime(0)
