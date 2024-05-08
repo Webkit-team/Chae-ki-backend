@@ -1,7 +1,7 @@
 package com.chaekibackend.chellenge.domain.interfaces;
 
-import org.springframework.stereotype.Repository;
+import com.chaekibackend.chellenge.domain.entity.Challenge;
+import org.springframework.data.jpa.repository.JpaRepository;
 
-@Repository
-public class ChallengeRepository {
+public interface ChallengeRepository extends JpaRepository<Challenge, Long> {
 }
