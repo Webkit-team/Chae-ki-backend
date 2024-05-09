@@ -4,3 +4,4 @@ spring:
 #      logging: dev, log
 #    active: logging
     active: dev
+
