@@ -20,7 +20,7 @@ public class Coupon {
     private String status;
     private LocalDateTime expiredDate;
     @ManyToOne
-    @JoinColumn(name="USERS_ID")
+    @JoinColumn(name="uno")
     private Users users;
 
 }

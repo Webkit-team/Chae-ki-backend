@@ -37,6 +37,7 @@ public class UsersController {
                 .nickname(nickname)
                 .build();
 
+
         return usersAppService.signup(user, image);
     }
 

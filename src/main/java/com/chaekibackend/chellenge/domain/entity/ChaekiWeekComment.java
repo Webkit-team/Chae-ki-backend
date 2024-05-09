@@ -17,9 +17,9 @@ public class ChaekiWeekComment {
     private Integer likeCount;
     private Boolean visible;
     @ManyToOne
-    @JoinColumn(name="CHALLENGEMEMBER_ID")
+    @JoinColumn(name="challengeMember_no")
     private ChallengeMember challengeMember;
     @ManyToOne
-    @JoinColumn(name="CHAEKIWEEK_ID")
+    @JoinColumn(name="chaekiWeek_no")
     private ChaekiWeek chaekiWeek;
 }

@@ -31,14 +31,14 @@ public class UsersResponse {
         private Long no;
         private String username; // user id
         private String nickname;
-        private String imageString;
+        private String imageUrl;
 
         public static UsersResponse.Update from(Users user) {
             return UsersResponse.Update.builder()
                     .no(user.getNo())
                     .username(user.getUsername())
                     .nickname(user.getNickname())
-                    .imageString(user.getImageUrl())
+                    .imageUrl(user.getImageUrl())
                     .build();
         }
     }

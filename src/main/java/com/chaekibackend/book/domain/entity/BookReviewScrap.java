@@ -18,7 +18,7 @@ public class BookReviewScrap {
     private Long no;
     private LocalDateTime createdAt;
     @ManyToOne
-    @JoinColumn(name="USERS_ID")
+    @JoinColumn(name="uno")
     private Users users;
 
 }

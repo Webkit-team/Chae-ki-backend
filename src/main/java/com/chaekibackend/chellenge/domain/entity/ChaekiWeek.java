@@ -16,12 +16,12 @@ public class ChaekiWeek {
     @GeneratedValue
     private Long no;
     @ManyToOne
-    @JoinColumn(name="CHALLENGE_ID")
+    @JoinColumn(name="challenge_no")
     private Challenge challenge;
     @ManyToOne
     private ChallengeMember challengeMember;
-    @OneToMany
+    @OneToMany(mappedBy = "chaekiWeek", cascade = CascadeType.REMOVE, orphanRemoval = true)
     private List<ChaekiWeekComment> commentList;
-    @OneToMany
+    @OneToMany(mappedBy = "chaekiWeek", cascade = CascadeType.REMOVE, orphanRemoval = true)
     private List<ChaekiToday> todayList;
 }

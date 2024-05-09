@@ -14,7 +14,7 @@ public class UsersRequest {
     public static class Update {
         private String password;
         private String nickname;
-        private String imageString;
+        private String imageUrl;
     }
 
     @Builder
