@@ -1,0 +1,12 @@
+# .gradle/ = 이 폴더 및 하위의 모든 파일
+
+.gradle
+.idea
+build
+gradle
+gradlew
+gradlew.bat
+HELP.md
+README.md
+settings.gradle
+src/main/resources/application-dev.yml
