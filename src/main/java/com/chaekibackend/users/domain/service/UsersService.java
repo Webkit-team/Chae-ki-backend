@@ -50,9 +50,9 @@ public class UsersService {
                 .username(user.getUsername())
                 .password(passwordEncoder.encode(user.getPassword()))
                 .nickname(user.getNickname())
-                .imageUrl(imageUrl)
+                .image(user.getImage())
                 .build();
-        Users saving = Users.from(encoded);
+        Users saving = Users.from(encoded, imageUrl);
 
         return usersRepository.save(saving);
     }
