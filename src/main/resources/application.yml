@@ -1,0 +1,6 @@
+spring:
+  profiles:
+#    group:
+#      logging: dev, log
+#    active: logging
+    active: dev
