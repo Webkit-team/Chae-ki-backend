@@ -1,5 +1,3 @@
-# .gradle/ = 이 폴더 및 하위의 모든 파일
-
 src/main/resources/application-dev.yml
 
 HELP.md
@@ -36,6 +34,3 @@ out/
 /dist/
 /nbdist/
 /.nb-gradle/
-
-### VS Code ###
-.vscode/

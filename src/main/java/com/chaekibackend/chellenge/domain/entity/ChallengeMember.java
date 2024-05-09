@@ -18,13 +18,13 @@ public class ChallengeMember {
     private Long no;
     private Integer readingPage;
     @ManyToOne
-    @JoinColumn(name="USERS_ID")
+    @JoinColumn(name="uno")
     private Users users;
     @ManyToOne
-    @JoinColumn(name="CHALLENGE_ID")
+    @JoinColumn(name="challenge_no")
     private Challenge challenge;
-    @OneToMany
+    @OneToMany(mappedBy = "challengeMember", cascade = CascadeType.REMOVE, orphanRemoval = true)
     private List<ChaekiToday> todayList;
-    @OneToMany
+    @OneToMany(mappedBy = "challengeMember", cascade = CascadeType.REMOVE, orphanRemoval = true)
     private List<ChaekiWeekComment> commentList;
 }

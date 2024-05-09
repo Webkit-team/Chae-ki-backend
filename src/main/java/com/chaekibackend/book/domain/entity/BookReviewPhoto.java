@@ -16,6 +16,6 @@ public class BookReviewPhoto {
     private Long no;
     private String imageString;
     @ManyToOne
-    @JoinColumn(name="BOOKREVIEW_ID")
+    @JoinColumn(name="bookReview_no")
     private BookReview bookReview;  // 이것도 OneToMany로 리스트 갖고 있어야 할 듯
 }

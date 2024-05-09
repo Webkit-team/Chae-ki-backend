@@ -29,6 +29,9 @@ public class Users {
     @Setter
     private String nickname;
 
+    @Setter
+    private String imageUrl;
+
     private String role;
 
     private Integer point;
@@ -38,27 +41,21 @@ public class Users {
     private Integer reportCount;
 
     @Setter
-    private String imageUrl;
-
-    @Setter
     private Boolean expired;
 
-    @OneToOne
-    private UserImage userImage;
-
-    @OneToMany
+    @OneToMany(mappedBy = "users", cascade = CascadeType.REMOVE, orphanRemoval = true)
     private List<ChallengeMember> challengeList;
 
-    @OneToMany
+    @OneToMany(mappedBy = "users", cascade = CascadeType.REMOVE, orphanRemoval = true)
     private List<LikeBook> likeList;
 
-    @OneToMany
+    @OneToMany(mappedBy = "users", cascade = CascadeType.REMOVE, orphanRemoval = true)
     private List<BookReview> reviewList;
 
-    @OneToMany
+    @OneToMany(mappedBy = "users", cascade = CascadeType.REMOVE, orphanRemoval = true)
     private List<BookReviewScrap> scrapList;
 
-    @OneToMany
+    @OneToMany(mappedBy = "users", cascade = CascadeType.REMOVE, orphanRemoval = true)
     private List<Coupon> couponList;
 
     public static Users from (UsersRequest.Create user, String imageUrl) {
@@ -66,6 +63,7 @@ public class Users {
                 .username(user.getUsername())
                 .password(user.getPassword())
                 .nickname(user.getNickname())
+                .imageUrl(user.getImageUrl())
                 .role("USER")
                 .point(0)
                 .totalReadingTime(0)
