@@ -61,7 +61,7 @@ public class Users {
     @OneToMany
     private List<Coupon> couponList;
 
-    public static Users from (UsersRequest.Create user) {
+    public static Users from (UsersRequest.Create user, String imageUrl) {
         return Users.builder()
                 .username(user.getUsername())
                 .password(user.getPassword())
@@ -70,6 +70,7 @@ public class Users {
                 .point(0)
                 .totalReadingTime(0)
                 .reportCount(0)
+                .imageUrl(imageUrl)
                 .expired(false)
                 .build();
     }
