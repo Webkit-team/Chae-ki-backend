@@ -24,11 +24,11 @@ public class BookReview {
     @Column(nullable=false, columnDefinition="BOOLEAN DEFAULT true")
     private Boolean visible;
     @ManyToOne
-    @JoinColumn(name="USERS_ID")
+    @JoinColumn(name="uno")
     private Users users;
     @ManyToOne
     private Book book;
-    @OneToMany
+    @OneToMany(mappedBy = "bookReview", cascade = CascadeType.REMOVE, orphanRemoval = true)
     private List<BookReviewPhoto> photoList;
 
 }

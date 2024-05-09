@@ -1,6 +1,7 @@
 package com.chaekibackend.chellenge.domain.entity;
 
 import com.chaekibackend.book.domain.entity.Book;
+import com.chaekibackend.chellenge.api.request.ChallengeRequest;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -32,9 +33,22 @@ public class Challenge {
     @ManyToOne
     private Book book;
 
-    @OneToMany
+    @OneToMany(mappedBy = "challenge", cascade = CascadeType.REMOVE, orphanRemoval = true)
     private List<ChaekiWeek> weekList;
-    @OneToMany
+    @OneToMany(mappedBy = "challenge", cascade = CascadeType.REMOVE, orphanRemoval = true)
     private List<ChallengeMember> memberList;
 
+    public static Challenge from (ChallengeRequest.Create challenge){
+        return Challenge.builder()
+                .no(challenge.getNo())
+                .name(challenge.getName())
+                .description(challenge.getDescription())
+                .startDate(challenge.getStartDate())
+                .endDate(challenge.getEndDate())
+                .memberCount(challenge.getMemberCount())
+//                .category (challenge.)
+//                .status(challenge.)
+                .book(challenge.getBook())
+                .build();
+    }
 }

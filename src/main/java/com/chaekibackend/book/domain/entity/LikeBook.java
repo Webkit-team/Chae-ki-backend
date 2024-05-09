@@ -18,7 +18,7 @@ public class LikeBook {
     private Long no;
     private LocalDateTime createdAt;
     @ManyToOne
-    @JoinColumn(name="USERS_ID")
+    @JoinColumn(name="uno")
     private Users users;
     @ManyToOne
     private Book book;
