@@ -63,7 +63,7 @@ public class Users {
                 .username(user.getUsername())
                 .password(user.getPassword())
                 .nickname(user.getNickname())
-                .imageUrl(user.getImageUrl())
+                .imageUrl(imageUrl)
                 .role("USER")
                 .point(0)
                 .totalReadingTime(0)
