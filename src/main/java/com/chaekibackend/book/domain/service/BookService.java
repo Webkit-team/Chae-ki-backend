@@ -20,7 +20,7 @@ public class BookService {
     private final WebClient webClient;
     private final WebClientConfig webClientConfig;
 
-    public void useWebClient() {
+    public List<Book> useWebClient() {
         WebClient webClient = WebClient.create();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
@@ -71,7 +71,7 @@ public class BookService {
                         .writer(bookResponse.getAuthor())
                         .description(bookResponse.getDescription())
                         .likeCount(0)
-//                        .pageNumber()  => 직접 넣어주기
+// todo:                        .pageNumber()  => 직접 넣어주기
                         .publisher(bookResponse.getPublisher())
                         .imageUrl(bookResponse.getCover())
                         .shopUrl(bookResponse.getLink())
@@ -83,6 +83,8 @@ public class BookService {
         }
 
         bookRepository.saveAll(bookList);
+
+        return bookList;
     }
 }
 

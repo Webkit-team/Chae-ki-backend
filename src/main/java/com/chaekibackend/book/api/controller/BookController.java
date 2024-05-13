@@ -15,12 +15,12 @@ import java.util.List;
 @RestController     // JSON 형태로 객체 데이터 반환
 @RequiredArgsConstructor
 public class BookController {
-    private final BookAppService bookAppServiece;
+    private final BookAppService bookAppService;
     private final BookService bookService;
 
-//    @GetMapping("/bookList")
-//    @ResponseBody
-//    public List<Book> getBookList(){
-//        return bookService.useWebClient();
-//    }
+    @GetMapping("/books")
+    @ResponseBody
+    public List<Book> getBookList(){
+        return bookService.useWebClient();
+    }
 }
