@@ -71,7 +71,7 @@ public class BookService {
                         .writer(bookResponse.getAuthor())
                         .description(bookResponse.getDescription())
                         .likeCount(0)
-//                        .pageNumber()  => 직접 넣어주기
+// TODO:                         .pageNumber()  => 직접 넣어주기
                         .publisher(bookResponse.getPublisher())
                         .imageUrl(bookResponse.getCover())
                         .shopUrl(bookResponse.getLink())

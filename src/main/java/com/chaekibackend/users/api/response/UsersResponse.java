@@ -10,6 +10,32 @@ public class UsersResponse {
     @Builder
     @AllArgsConstructor
     @Getter
+    @Schema(name = "UsersResponse.Detail")
+    public static class Detail {
+        private Long no;
+        private String username;
+        private String nickname;
+        private String imageUrl;
+        private Integer point;
+        private Integer totalReadingTime;
+        private Boolean expired;
+
+        public static UsersResponse.Detail from(Users user) {
+            return Detail.builder()
+                    .no(user.getNo())
+                    .username(user.getUsername())
+                    .nickname(user.getNickname())
+                    .imageUrl(user.getImageUrl())
+                    .point(user.getPoint())
+                    .totalReadingTime(user.getTotalReadingTime())
+                    .expired(user.getExpired())
+                    .build();
+        }
+    }
+
+    @Builder
+    @AllArgsConstructor
+    @Getter
     @Schema(name = "UsersResponse.Delete")
     public static class Delete {
         private Long no;
