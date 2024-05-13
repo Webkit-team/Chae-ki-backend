@@ -8,6 +8,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Entity
@@ -30,5 +31,5 @@ public class Book {
     private String shopUrl;
     private Integer price;
     private String isbnCode;
-    private LocalDateTime publishDate;
+    private LocalDate publishDate;
 }

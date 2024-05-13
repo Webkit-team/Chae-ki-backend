@@ -18,9 +18,9 @@ public class BookController {
     private final BookAppService bookAppServiece;
     private final BookService bookService;
 
-    @GetMapping("/bookList")
-    @ResponseBody
-    public List<Book> getBookList(){
-        return bookService.useWebClient();
-    }
+//    @GetMapping("/bookList")
+//    @ResponseBody
+//    public List<Book> getBookList(){
+//        return bookService.useWebClient();
+//    }
 }
