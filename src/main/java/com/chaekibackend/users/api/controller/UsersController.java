@@ -19,7 +19,6 @@ import org.springframework.web.multipart.MultipartFile;
 public class UsersController {
     private final UsersAppService usersAppService;
 
-    // todo: 특정 no 사용자 조회
     @GetMapping(value = "/users/{uno}", produces = {MediaType.APPLICATION_JSON_VALUE})
     @Operation(summary = "특정 사용자 정보 조회", description = "특정 사용자의 세부적인 정보를 조회합니다.")
     public UsersResponse.Detail readUser(@PathVariable Long uno) {
