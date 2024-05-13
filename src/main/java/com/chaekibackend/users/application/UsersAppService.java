@@ -20,36 +20,41 @@ public class UsersAppService {
     private final S3Service s3Service;
     private final PasswordEncoder passwordEncoder;
 
-    public UsersResponse.Delete deleteUser(Long uno) {
-        Users deletedUser = usersService.deleteUser(uno);
+    public UsersResponse.Detail readUser(Long uno) {
+        Users fountUser = usersService.readUser(uno);
 
-        return UsersResponse.Delete.from(deletedUser);
+        return UsersResponse.Detail.from(fountUser);
+    }
+
+    public UsersResponse.Delete deleteUser(Long uno) {
+        Users fountUser = usersService.deleteUser(uno);
+
+        return UsersResponse.Delete.from(fountUser);
     }
 
     public UsersResponse.Update updateUser(Long uno, UsersRequest.Update user, MultipartFile file) {
         // uno로 유저 정보 조회
-        Users existUser = usersService.readUser(uno);
+        Users fountUser = usersService.readUser(uno);
 
         // 수정할 정보로 덮어쓰기
         if (! user.getNickname().isBlank()) {
-            existUser.setNickname(user.getNickname());
+            fountUser.setNickname(user.getNickname());
         }
         if (! user.getPassword().isBlank()) {
             String password = passwordEncoder.encode(user.getPassword());
-            existUser.setPassword(password);
+            fountUser.setPassword(password);
         }
         if (file != null && !file.isEmpty()) {
             String imageUrl = s3Service.saveFile(file);
-            existUser.setImageUrl(imageUrl);
+            fountUser.setImageUrl(imageUrl);
         }
 
         // 수정된 유저정보를 저장
-        Users userToUpdate = usersService.saveUser(existUser);
+        Users userToUpdate = usersService.saveUser(fountUser);
 
         return UsersResponse.Update.from(userToUpdate);
     }
 
-    @Transactional
     public UsersResponse.Create signup(UsersRequest.Create user, MultipartFile file) {
         String imageUrl = null;
         if (file != null && !file.isEmpty()) {

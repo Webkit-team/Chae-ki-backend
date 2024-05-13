@@ -19,6 +19,12 @@ import org.springframework.web.multipart.MultipartFile;
 public class UsersController {
     private final UsersAppService usersAppService;
 
+    @GetMapping(value = "/users/{uno}", produces = {MediaType.APPLICATION_JSON_VALUE})
+    @Operation(summary = "특정 사용자 정보 조회", description = "특정 사용자의 세부적인 정보를 조회합니다.")
+    public UsersResponse.Detail readUser(@PathVariable Long uno) {
+        return usersAppService.readUser(uno);
+    }
+
     @DeleteMapping(value = "/users/{uno}", produces = {MediaType.APPLICATION_JSON_VALUE})
     @Operation(summary = "회원탈퇴", description = "회원탈퇴를 진행합니다.")
     public UsersResponse.Delete deleteUser(@PathVariable Long uno) {
@@ -38,8 +44,6 @@ public class UsersController {
                 .password(password)
                 .nickname(nickname)
                 .build();
-
-
 
         return usersAppService.signup(user, image);
     }

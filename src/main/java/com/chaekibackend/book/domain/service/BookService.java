@@ -20,6 +20,10 @@ public class BookService {
     private final WebClient webClient;
     private final WebClientConfig webClientConfig;
 
+    public List<Book> readAllBooks() {
+        return bookRepository.findAll();
+    }
+
     public void useWebClient() {
         WebClient webClient = WebClient.create();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
@@ -71,7 +75,7 @@ public class BookService {
                         .writer(bookResponse.getAuthor())
                         .description(bookResponse.getDescription())
                         .likeCount(0)
-//                        .pageNumber()  => 직접 넣어주기
+// TODO:                         .pageNumber()  => 직접 넣어주기
                         .publisher(bookResponse.getPublisher())
                         .imageUrl(bookResponse.getCover())
                         .shopUrl(bookResponse.getLink())
