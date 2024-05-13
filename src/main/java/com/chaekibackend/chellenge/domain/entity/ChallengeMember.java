@@ -17,6 +17,7 @@ public class ChallengeMember {
     @GeneratedValue
     private Long no;
     private Integer readingPage;
+    private Integer readingTime;
     @ManyToOne
     @JoinColumn(name="uno")
     private Users users;

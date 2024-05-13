@@ -16,6 +16,8 @@ public class ChaekiToday {
     @GeneratedValue
     private Long no;
     private String content;
+    private Integer readingPage;
+    private Integer readingTime;
     private LocalDateTime createdAt;
     private Integer likeCount;
     private Boolean visible;
