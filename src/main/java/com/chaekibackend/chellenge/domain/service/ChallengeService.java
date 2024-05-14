@@ -22,11 +22,15 @@ public class ChallengeService {
         return challengeRepository.findAll();
     }
 
+    public Challenge readChallenge(Long id){
+        return challengeRepository.findById(id).orElseThrow();
+    }
+
     @Transactional
     public List<Challenge> createChallenge(ChallengeRequest.Create request) {
         Book choiceBook = bookRepository.findByNo(request.getBookNo());
 
-        System.out.println("choiceBook = " + choiceBook.getName());     // 여기서 null이 들어가는데..
+        System.out.println("choiceBook = " + choiceBook.getName());
 
         Challenge challenge = Challenge.builder()
                 .name(request.getName())
@@ -35,13 +39,11 @@ public class ChallengeService {
                 .endDate(request.getEndDate())
                 .memberCount(request.getMemberCount())
                 .category(choiceBook.getCategory())
-                .status(ChallengeStatus.recruiting)
+                .status(ChallengeStatus.RECRUITING)
                 .book(choiceBook)
                 .build();
 
         challengeRepository.save(challenge);
-
-        System.out.println("ChallengeService에서 오류");
 
         return readAllChallenges();
 

@@ -18,4 +18,10 @@ public class ChallengeController {
     public List<ChallengeResponse.Detail> CreateChallenge(@RequestBody ChallengeRequest.Create request){
         return challengeAppService.createChallenge(request);
     }
+
+    @GetMapping("/challenge/{id}")
+    @ResponseBody
+    public ChallengeResponse.Detail GetChallenge(@PathVariable("id") Long id){
+        return challengeAppService.readChallenge(id);
+    }
 }

@@ -29,10 +29,16 @@ public class ChallengeAppService {
             challengeResponses.add(ChallengeResponse.Detail.from(challenge, book));
         }
 
-        System.out.println("ChallengeAppService에서 오류");
-
-        // return이 안된다는 의민데..
         return challengeResponses;
+    }
+
+    public ChallengeResponse.Detail readChallenge(Long id){
+        Challenge challenge = challengeService.readChallenge(id);
+
+        Book book = challenge.getBook();
+        ChallengeResponse.Detail res = ChallengeResponse.Detail.from(challenge, book);
+
+        return res;
     }
 
 }
