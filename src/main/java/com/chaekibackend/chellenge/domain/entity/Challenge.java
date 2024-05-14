@@ -8,6 +8,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -23,8 +24,8 @@ public class Challenge {
     private Long no;
     private String name;
     private String description;
-    private LocalDateTime startDate;
-    private LocalDateTime endDate;
+    private LocalDate startDate;
+    private LocalDate endDate;
     private Integer memberCount;
     private String category;
     @Enumerated(EnumType.STRING)
@@ -38,7 +39,7 @@ public class Challenge {
     @OneToMany(mappedBy = "challenge", cascade = CascadeType.REMOVE, orphanRemoval = true)
     private List<ChallengeMember> memberList;
 
-    public static Challenge from (ChallengeRequest.Create challenge){
+    public static Challenge from (ChallengeRequest.Create challenge, Book book){
         return Challenge.builder()
                 .no(challenge.getNo())
                 .name(challenge.getName())
@@ -47,8 +48,8 @@ public class Challenge {
                 .endDate(challenge.getEndDate())
                 .memberCount(challenge.getMemberCount())
 //                .category (challenge.)
-//                .status(challenge.)
-                .book(challenge.getBook())
+//                .status(Challenge)            => 이건 어떻게 하지?
+                .book(book)
                 .build();
     }
 }
