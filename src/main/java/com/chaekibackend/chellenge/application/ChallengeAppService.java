@@ -18,7 +18,6 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ChallengeAppService {
     private final ChallengeService challengeService;
-    private final BookRepository bookRepository;
 
     public List<ChallengeResponse.Detail> createChallenge(ChallengeRequest.Create request) {
         List<Challenge> challengeList = challengeService.createChallenge(request);
@@ -40,5 +39,19 @@ public class ChallengeAppService {
 
         return res;
     }
+
+    public List<ChallengeResponse.Detail> readMyChallenges(Long uno){
+        List<Challenge> myChallenges = challengeService.readMyChallenges(uno);
+        List<ChallengeResponse.Detail> myChallengesDetail = new ArrayList<>();
+
+        for(Challenge challenge : myChallenges){
+            Book book = challenge.getBook();
+            myChallengesDetail.add(ChallengeResponse.Detail.from(challenge, book));
+        }
+
+        return myChallengesDetail;
+    }
+
+
 
 }

@@ -19,9 +19,15 @@ public class ChallengeController {
         return challengeAppService.createChallenge(request);
     }
 
-    @GetMapping("/challenge/{id}")
+    @GetMapping("/challenge/{uno}")
     @ResponseBody
-    public ChallengeResponse.Detail GetChallenge(@PathVariable("id") Long id){
-        return challengeAppService.readChallenge(id);
+    public ChallengeResponse.Detail GetChallenge(@PathVariable("uno") Long uno){
+        return challengeAppService.readChallenge(uno);
+    }
+
+    @GetMapping("/users/{uno}/challenges")
+    @ResponseBody
+    public List<ChallengeResponse.Detail> GetMyChallenges(@PathVariable("uno") Long uno){
+        return challengeAppService.readMyChallenges(uno);
     }
 }
