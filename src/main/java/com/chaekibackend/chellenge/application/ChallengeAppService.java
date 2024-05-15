@@ -4,7 +4,9 @@ import com.chaekibackend.book.api.response.BookResponse;
 import com.chaekibackend.book.domain.entity.Book;
 import com.chaekibackend.book.domain.interfaces.BookRepository;
 import com.chaekibackend.chellenge.api.request.ChallengeRequest;
+import com.chaekibackend.chellenge.api.response.ChaekiTodayResponse;
 import com.chaekibackend.chellenge.api.response.ChallengeResponse;
+import com.chaekibackend.chellenge.domain.entity.ChaekiToday;
 import com.chaekibackend.chellenge.domain.entity.Challenge;
 import com.chaekibackend.chellenge.domain.service.ChallengeService;
 import jakarta.persistence.Entity;
@@ -50,6 +52,17 @@ public class ChallengeAppService {
         }
 
         return myChallengesDetail;
+    }
+
+    public List<ChaekiTodayResponse.Detail> readMyChaekiTodays(Long uno){
+        List<ChaekiToday> myChaekiTodays = challengeService.readMyChaekiTodays(uno);
+        List<ChaekiTodayResponse.Detail> myChaekiTodaysDetail = new ArrayList<>();
+
+        for(ChaekiToday chaekiToday : myChaekiTodays){
+            myChaekiTodaysDetail.add(ChaekiTodayResponse.Detail.from(chaekiToday));
+        }
+
+        return myChaekiTodaysDetail;
     }
 
 
