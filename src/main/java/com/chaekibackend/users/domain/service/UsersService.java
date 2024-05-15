@@ -18,6 +18,7 @@ public class UsersService {
     private final UsersRepository usersRepository;
     private final PasswordEncoder passwordEncoder;
 
+    @Transactional
     public Users deleteUser(Long uno) {
         Optional<Users> result = usersRepository.findById(uno);
         if(result.isEmpty()) {
@@ -30,6 +31,7 @@ public class UsersService {
         return usersRepository.save(user);
     }
 
+    @Transactional
     public Users saveUser(Users users) {
         return usersRepository.save(users);
     }

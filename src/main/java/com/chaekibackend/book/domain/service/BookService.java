@@ -20,7 +20,11 @@ public class BookService {
     private final WebClient webClient;
     private final WebClientConfig webClientConfig;
 
-    public List<Book> useWebClient() {
+    public List<Book> readAllBooks() {
+        return bookRepository.findAll();
+    }
+
+    public void useWebClient() {
         WebClient webClient = WebClient.create();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 

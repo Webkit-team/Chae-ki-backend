@@ -15,6 +15,8 @@ public class ChaekiWeek {
     @Id
     @GeneratedValue
     private Long no;
+    private Integer readingPage;
+    private Integer readingTime;
     @ManyToOne
     @JoinColumn(name="challenge_no")
     private Challenge challenge;
