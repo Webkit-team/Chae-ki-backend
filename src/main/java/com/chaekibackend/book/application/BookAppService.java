@@ -12,13 +12,11 @@ import java.util.List;
 public class BookAppService {
     private final BookService bookService;
 
-    // 여기서 Dto로 가공을 해줘야 하는데..?
-//    public
-
-    public List<BookResponse.GetBook> readAllBooks() {
+    public List<BookResponse.Detail> readAllBooks() {
         return bookService.readAllBooks()
                 .stream()
-                .map(BookResponse.GetBook::from)
+                .map(BookResponse.Detail::from)
                 .toList();
     }
+
 }
