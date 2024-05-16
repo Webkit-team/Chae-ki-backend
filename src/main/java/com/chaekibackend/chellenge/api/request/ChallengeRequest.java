@@ -7,6 +7,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 public class ChallengeRequest {
@@ -36,10 +37,10 @@ public class ChallengeRequest {
         private Long no;
         private String name;
         private String description;
-        private LocalDateTime startDate;
-        private LocalDateTime endDate;
+        private LocalDate startDate;
+        private LocalDate endDate;
         private Integer memberCount;
-        private Book book;
+        private Long bookNo;
     }
 
     @Getter
@@ -48,8 +49,8 @@ public class ChallengeRequest {
         private Long no;
         private String name;
         private String description;
-        private LocalDateTime startDate;
-        private LocalDateTime endDate;
+        private LocalDate startDate;
+        private LocalDate endDate;
         private Integer memberCount;
         private Book book;
     }

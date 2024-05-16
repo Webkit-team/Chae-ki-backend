@@ -52,7 +52,7 @@ public class BookResponse {
     @AllArgsConstructor
     @Getter
     @Schema(name = "BookResponse.GetBook")
-    public static class GetBook{
+    public static class Detail{
         private Long no;
         private String name;
         private String category;
@@ -67,8 +67,8 @@ public class BookResponse {
         private String isbnCode;
         private LocalDate publishDate;
 
-        public static BookResponse.GetBook from(Book book) {
-            return BookResponse.GetBook.builder()
+        public static BookResponse.Detail from(Book book) {
+            return BookResponse.Detail.builder()
                     .no(book.getNo())
                     .name(book.getName())
                     .category(book.getCategory())

@@ -27,7 +27,7 @@ public class BookController {
 
     @Operation(summary = "도서 목록 조회", description = "도서 목록을 조회합니다.")
     @GetMapping(value = "/books", produces = {MediaType.APPLICATION_JSON_VALUE})
-    public List<BookResponse.GetBook> readAllBook() {
+    public List<BookResponse.Detail> readAllBook() {
         return bookAppService.readAllBooks();
     }
 }

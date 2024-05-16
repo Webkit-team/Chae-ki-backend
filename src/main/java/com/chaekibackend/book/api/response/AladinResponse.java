@@ -30,6 +30,5 @@ public class AladinResponse {
         private Integer priceStandard;
         private String isbn;
         private LocalDate pubDate;
-
     }
 }

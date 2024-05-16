@@ -44,7 +44,7 @@ public class SecurityConfig {
         http.formLogin(AbstractHttpConfigurer::disable); // form 안 쓰고, api 방식으로 할 거라서
         http.httpBasic(AbstractHttpConfigurer::disable); // header에 아이디,비번 안 넣고, jwt 사용할 거라서
         http.authorizeHttpRequests(auth -> auth // 경로마다 인가 작업
-                .requestMatchers("/signup", "/bookList").permitAll()
+                .requestMatchers("/signup", "/bookList", "/challenge", "/challenge/**", "/users/*/challenges", "users/*/chaekiTodays", "users/*/myReadingTime").permitAll()
                 .requestMatchers("/login", "/", "/swagger-ui/**", "/v3/api-docs/**").permitAll()
                 .requestMatchers(HttpMethod.GET, "/challenges").permitAll()
                 .anyRequest().authenticated());

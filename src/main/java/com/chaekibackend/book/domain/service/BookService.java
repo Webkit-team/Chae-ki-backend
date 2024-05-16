@@ -39,20 +39,6 @@ public class BookService {
         categoryList.add("소설/시/희곡");
         categoryList.add("경제경영");
 
-//        AladinResponse.AladinTotalResponse res = webClient.get()
-//                .uri(uriBuilder -> uriBuilder           // uriBuilder를 이용해 동적으로 URI 구성
-//                        .queryParam("ttbkey", "ttbchjw9561322001")
-//                        .queryParam("QueryType", "Bestseller")
-//                        .queryParam("MaxResults", 10)
-//                        .queryParam("SearchTarget", "Book")
-//                        .queryParam("Output", "JS")
-//                        .queryParam("Version", 20131101)
-//                        .build())
-////            .accept(MediaType.APPLICATION_JSON)
-//                .retrieve()
-//                .bodyToMono(AladinResponse.AladinTotalResponse.class)
-//                .block();
-
         AladinResponse.AladinTotalResponse res = webClient.get()
                 .uri("http://www.aladin.co.kr/ttb/api/ItemList.aspx?ttbkey=ttbchjw9561322001&QueryType=Bestseller&MaxResults=10&SearchTarget=Book&Output=JS&Version=20131101")
                 .retrieve()
