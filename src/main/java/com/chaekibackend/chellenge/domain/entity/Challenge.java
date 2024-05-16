@@ -30,7 +30,7 @@ public class Challenge {
     @Enumerated(EnumType.STRING)
     private ChallengeStatus status;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     private Book book;
 
     @OneToMany(mappedBy = "challenge", cascade = CascadeType.REMOVE, orphanRemoval = true)

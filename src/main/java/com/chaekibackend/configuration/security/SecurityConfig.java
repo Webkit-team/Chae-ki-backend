@@ -4,6 +4,7 @@ import com.chaekibackend.users.domain.interfaces.UsersRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -45,6 +46,7 @@ public class SecurityConfig {
         http.authorizeHttpRequests(auth -> auth // 경로마다 인가 작업
                 .requestMatchers("/signup", "/bookList").permitAll()
                 .requestMatchers("/login", "/", "/swagger-ui/**", "/v3/api-docs/**").permitAll()
+                .requestMatchers(HttpMethod.GET, "/challenges").permitAll()
                 .anyRequest().authenticated());
         http.sessionManagement(session -> session // 세션을 비상태로 설정
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS));
