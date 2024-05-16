@@ -30,6 +30,10 @@ public class ChallengeAppService {
     private final UsersService usersService;
     private final ChallengeMemberService memberService;
 
+//    public Boolean saveTimer(Long uno, ChallengeRequest.TimerSave timer) {
+//
+//    }
+
     public ChallengeResponse.Join joinChallenge(ChallengeRequest.Join join) {
         Challenge challenge = challengeService.readByNo(join.getCno());
         Users user = usersService.readByNo(join.getUno());

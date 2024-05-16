@@ -16,6 +16,16 @@ public class ChallengeResponse {
     @Builder
     @AllArgsConstructor
     @Getter
+    @Schema(name = "ChallengeResponse.TodaySave")
+    public static class TodaySave {
+        private Long todayNo;
+        private Long challengeNo;
+        private Long userNo;
+    }
+
+    @Builder
+    @AllArgsConstructor
+    @Getter
     @Schema(name = "ChallengeResponse.Join")
     public static class Join {
         private Long challengeNo;

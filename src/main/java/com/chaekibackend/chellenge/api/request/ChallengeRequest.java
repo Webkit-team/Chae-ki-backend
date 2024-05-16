@@ -10,8 +10,19 @@ import lombok.Getter;
 import java.time.LocalDateTime;
 
 public class ChallengeRequest {
-    @Builder
-    @AllArgsConstructor
+    @Getter
+    @Schema(name = "")
+    public static class TimerSave {
+        private Integer time;
+    }
+
+    @Getter
+    @Schema(name = "ChallengeRequest.TodaySave")
+    public static class TodaySave {
+        private String content;
+//        private
+    }
+
     @Getter
     @Schema(name = "ChallengeRequest.Join")
     public static class Join {
@@ -19,9 +30,7 @@ public class ChallengeRequest {
         private Long uno;
     }
 
-    @Builder
     @Getter
-    @AllArgsConstructor
     @Schema(name = "ChallengeRequest.Create")
     public static class Create{
         private Long no;
@@ -33,9 +42,7 @@ public class ChallengeRequest {
         private Book book;
     }
 
-    @Builder
     @Getter
-    @AllArgsConstructor
     @Schema(name = "ChallengeRequest.Update")
     public static class Update{
         private Long no;
