@@ -82,8 +82,8 @@ public class ChallengeService {
         return readAllChallenges();
     }
 
-    public List<ChaekiToday> readMyChaekiTodays(Long id){
-        Optional<Users> users = usersRepository.findById(id);
+    public List<ChaekiToday> readMyChaekiTodays(Long no){
+        Optional<Users> users = usersRepository.findById(no);
         List<ChaekiToday> chaekiTodays = new ArrayList<>();
 
         users.ifPresent(u -> {
@@ -95,4 +95,8 @@ public class ChallengeService {
 
         return chaekiTodays;
     }
+
+//    public List<> readMyReadingTimes(Long no){
+//
+//    }
 }
