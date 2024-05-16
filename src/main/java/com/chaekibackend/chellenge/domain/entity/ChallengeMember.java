@@ -30,4 +30,14 @@ public class ChallengeMember {
     private List<ChaekiToday> todayList;
     @OneToMany(mappedBy = "challengeMember", cascade = CascadeType.REMOVE, orphanRemoval = true)
     private List<ChaekiWeekComment> commentList;
+
+    public static ChallengeMember createNewMember(Challenge challenge, Users users) {
+        return ChallengeMember
+                .builder()
+                .readingPage(0)
+                .readingTime(0)
+                .users(users)
+                .challenge(challenge)
+                .build();
+    }
 }

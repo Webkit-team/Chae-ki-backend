@@ -1,14 +1,15 @@
 package com.chaekibackend.book.domain.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
+import com.chaekibackend.chellenge.domain.entity.Challenge;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Data
@@ -31,4 +32,8 @@ public class Book {
     private Integer price;
     private String isbnCode;
     private LocalDate publishDate;
+
+    @Builder.Default
+    @OneToMany(mappedBy = "book", cascade = {CascadeType.REMOVE}, orphanRemoval = true, fetch = FetchType.LAZY)
+    private List<Challenge> challengeList = new ArrayList<>();
 }
