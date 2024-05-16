@@ -18,8 +18,6 @@ public class ChaekiWeek {
     @Id
     @GeneratedValue
     private Long no;
-    private Integer readingPage;
-    private Integer readingTime;
     private LocalDate startDate;
     private LocalDate endDate;
 
@@ -36,8 +34,6 @@ public class ChaekiWeek {
     public static ChaekiWeek createNewWeek(Challenge challenge, LocalDate start) {
         return ChaekiWeek
                 .builder()
-                .readingPage(0)
-                .readingTime(0)
                 .startDate(start)
                 .endDate(start.plusDays(6))
                 .challenge(challenge)

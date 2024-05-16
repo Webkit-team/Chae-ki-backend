@@ -18,8 +18,6 @@ public class ChallengeMember {
     @Id
     @GeneratedValue
     private Long no;
-    private Integer readingPage;
-    private Integer readingTime;
     @ManyToOne
     @JoinColumn(name="uno")
     private Users users;
@@ -34,8 +32,6 @@ public class ChallengeMember {
     public static ChallengeMember createNewMember(Challenge challenge, Users users) {
         return ChallengeMember
                 .builder()
-                .readingPage(0)
-                .readingTime(0)
                 .users(users)
                 .challenge(challenge)
                 .build();

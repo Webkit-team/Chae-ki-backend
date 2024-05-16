@@ -36,8 +36,6 @@ public class Users {
 
     private Integer point;
 
-    private Integer totalReadingTime;
-
     private Integer reportCount;
 
     @Setter
@@ -66,7 +64,6 @@ public class Users {
                 .imageUrl(imageUrl)
                 .role("USER")
                 .point(0)
-                .totalReadingTime(0)
                 .reportCount(0)
                 .imageUrl(imageUrl)
                 .expired(false)
