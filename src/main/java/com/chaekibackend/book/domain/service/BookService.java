@@ -38,6 +38,8 @@ public class BookService {
         categoryList.add("과학");
         categoryList.add("소설/시/희곡");
         categoryList.add("경제경영");
+        
+        // 챌린지 카테고리 해당되지 않으면 DB에 안 들어가게 하기!
 
         AladinResponse.AladinTotalResponse res = webClient.get()
                 .uri("http://www.aladin.co.kr/ttb/api/ItemList.aspx?ttbkey=ttbchjw9561322001&QueryType=Bestseller&MaxResults=10&SearchTarget=Book&Output=JS&Version=20131101")
@@ -73,6 +75,10 @@ public class BookService {
         }
 
         bookRepository.saveAll(bookList);
+    }
+
+    public Book readBook(Long no){
+        return bookRepository.findByNo(no);
     }
 }
 

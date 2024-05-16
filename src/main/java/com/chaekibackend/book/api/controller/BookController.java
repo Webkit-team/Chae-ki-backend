@@ -8,6 +8,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -29,5 +30,11 @@ public class BookController {
     @GetMapping(value = "/books", produces = {MediaType.APPLICATION_JSON_VALUE})
     public List<BookResponse.Detail> readAllBook() {
         return bookAppService.readAllBooks();
+    }
+
+    @Operation(summary = "도서 상세 조회", description = "도서 정보를 조회합니다.")
+    @GetMapping(value="/books/{no}")
+    public BookResponse.Detail readBook(@PathVariable("no") Long no) {
+        return bookAppService.readBook(no);
     }
 }
