@@ -6,11 +6,14 @@ import com.chaekibackend.users.application.UsersAppService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -63,5 +66,11 @@ public class UsersController {
                 .build();
 
         return usersAppService.updateUser(uno, users, image);
+    }
+
+    @GetMapping(value="/userRank")
+    @Operation(summary = "회원랭킹조회", description = "회원 포인트에 따른 랭킹을 조회합니다.")
+    public List<UsersResponse.Detail> readRankOfUsers (){
+        return usersAppService.readRankOfUsers();
     }
 }

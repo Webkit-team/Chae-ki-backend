@@ -11,6 +11,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 @Slf4j
@@ -63,5 +66,16 @@ public class UsersAppService {
         Users savedUser = usersService.signup(user, imageUrl);
 
         return UsersResponse.Create.from(savedUser);
+    }
+
+    public List<UsersResponse.Detail> readRankOfUsers(){
+        List<UsersResponse.Detail> readUsersRank = new ArrayList<>();
+        List<Users> usersRanking = usersService.readRankOfUsers();
+
+        for(Users user : usersRanking){
+            readUsersRank.add(UsersResponse.Detail.from(user));
+        }
+
+        return readUsersRank;
     }
 }
