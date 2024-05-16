@@ -1,13 +1,11 @@
 package com.chaekibackend.chellenge.api.controller;
 
 import com.chaekibackend.chellenge.api.request.ChallengeRequest;
-import com.chaekibackend.chellenge.api.response.ChallengeResponse;
 import com.chaekibackend.chellenge.api.response.ChaekiTodayResponse;
 import com.chaekibackend.chellenge.api.response.ChallengeResponse;
 import com.chaekibackend.chellenge.api.response.ReadingTimeResponse;
 import com.chaekibackend.chellenge.application.ChallengeAppService;
 import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
@@ -16,7 +14,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -58,8 +55,9 @@ public class ChallengeController {
     // 마이페이지 독서 시간 목록 조회 (그래프용)
     @GetMapping("users/{uno}/myReadingTime")
     @ResponseBody
-    public List<ReadingTimeResponse> GetMyReadingTimes(@PathVariable("uno") Long uno){
+    public List<ReadingTimeResponse> GetMyReadingTimes(@PathVariable("uno") Long uno) {
         return challengeAppService.readMyReadingTimes(uno);
+    }
       
 //    @PostMapping(value = "/challenges/timer/{uno}")
 //    @Operation(summary = "타이머 시간 등록", description = "타이머에 설정 시간을 누적합니다.")

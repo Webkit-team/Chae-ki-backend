@@ -6,14 +6,9 @@ import com.chaekibackend.chellenge.domain.entity.Challenge;
 import com.chaekibackend.chellenge.domain.entity.ChallengeMember;
 import com.chaekibackend.chellenge.domain.entity.ChallengeStatus;
 import io.swagger.v3.oas.annotations.media.Schema;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.Getter;
+import lombok.*;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 
 public class ChallengeResponse {
     @Data
@@ -79,8 +74,8 @@ public class ChallengeResponse {
         private Long no;
         private String name;
         private String description;
-        private LocalDateTime startDate;
-        private LocalDateTime endDate;
+        private LocalDate startDate;
+        private LocalDate endDate;
         private Integer memberCount;
         private String category;
         private ChallengeStatus status;
@@ -98,31 +93,6 @@ public class ChallengeResponse {
                     .category(challenge.getCategory())
                     .status(challenge.getStatus())
                     .book(BookResponse.Detail.from(challenge.getBook()))
-                    .build();
-        }
-    }
-
-    @Builder
-    @AllArgsConstructor
-    @Getter
-    @Schema(name = "ChallengeResponse.Update")
-    public static class Update{
-        private Long no;
-        private String name;
-        private String description;
-        private LocalDateTime startDate;
-        private LocalDateTime endDate;
-        private Integer memberCount;
-        private Book book;
-        public static ChallengeResponse.Update from(Challenge challenge){
-            return Update.builder()
-                    .no(challenge.getNo())
-                    .name(challenge.getName())
-                    .description(challenge.getDescription())
-                    .startDate(challenge.getStartDate())
-                    .endDate(challenge.getEndDate())
-                    .memberCount(challenge.getMemberCount())
-                    .book(challenge.getBook())
                     .build();
         }
     }
