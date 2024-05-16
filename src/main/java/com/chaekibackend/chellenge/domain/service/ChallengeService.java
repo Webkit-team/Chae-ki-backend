@@ -19,6 +19,7 @@ import com.chaekibackend.users.domain.entity.Users;
 import com.chaekibackend.users.domain.interfaces.UsersRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
@@ -31,6 +32,7 @@ import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class ChallengeService {
     private final ChallengeRepository challengeRepository;
     private final ChallengeMemberRepository challengeMemberRepository;
@@ -69,25 +71,11 @@ public class ChallengeService {
     }
 
     @Transactional
-    public List<Challenge> createChallenge(ChallengeRequest.Create request) {
+    public Challenge createChallenge(ChallengeRequest.Create request) {
         Book choiceBook = bookRepository.findByNo(request.getBookNo());
+        Challenge challenge = Challenge.from(request, choiceBook);
 
-        System.out.println("choiceBook = " + choiceBook.getName());
-
-        Challenge challenge = Challenge.builder()
-                .name(request.getName())
-                .description(request.getDescription())
-                .startDate(request.getStartDate())
-                .endDate(request.getEndDate())
-                .memberCount(request.getMemberCount())
-                .category(choiceBook.getCategory())
-                .status(ChallengeStatus.RECRUITING)
-                .book(choiceBook)
-                .build();
-
-        challengeRepository.save(challenge);
-
-        return readAllChallenges();
+        return challengeRepository.save(challenge);
     }
 
     public List<ChaekiToday> readMyChaekiTodays(Long no){

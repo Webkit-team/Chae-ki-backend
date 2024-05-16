@@ -25,14 +25,14 @@ public class ChallengeController {
     private final ChallengeAppService challengeAppService;
 
     // 챌린지 등록
-    @PostMapping(value="/challenge")
+    @PostMapping(value="/challenges")
     @ResponseBody
-    public List<ChallengeResponse.Detail> CreateChallenge(@RequestBody ChallengeRequest.Create request){
+    public ChallengeResponse.Detail CreateChallenge(@RequestBody ChallengeRequest.Create request){
         return challengeAppService.createChallenge(request);
     }
 
     // 챌린지 상세 조회
-    @GetMapping("/challenge/{no}")
+    @GetMapping("/challenges/{no}")
     @ResponseBody
     public ChallengeResponse.Detail GetChallenge(@PathVariable("no") Long no){
         return challengeAppService.readChallenge(no);

@@ -34,12 +34,10 @@ public class ChallengeRequest {
     @Getter
     @Schema(name = "ChallengeRequest.Create")
     public static class Create{
-        private Long no;
         private String name;
         private String description;
         private LocalDate startDate;
         private LocalDate endDate;
-        private Integer memberCount;
         private Long bookNo;
     }
 

@@ -1,14 +1,14 @@
 package com.chaekibackend.chellenge.application;
 
-import com.chaekibackend.book.api.response.BookResponse;
 import com.chaekibackend.book.domain.entity.Book;
 import com.chaekibackend.book.domain.interfaces.BookRepository;
 import com.chaekibackend.chellenge.api.request.ChallengeRequest;
 import com.chaekibackend.chellenge.api.response.ChaekiTodayResponse;
 import com.chaekibackend.chellenge.api.response.ChallengeResponse;
 import com.chaekibackend.chellenge.api.response.ReadingTimeResponse;
-import com.chaekibackend.chellenge.domain.entity.ChaekiToday;
-import com.chaekibackend.chellenge.domain.entity.Challenge;
+import com.chaekibackend.chellenge.domain.entity.*;
+import com.chaekibackend.chellenge.domain.service.ChaekiWeekService;
+import com.chaekibackend.chellenge.domain.service.ChallengeMemberService;
 import com.chaekibackend.chellenge.domain.service.ChallengeService;
 import com.chaekibackend.users.domain.entity.Users;
 import com.chaekibackend.users.domain.service.UsersService;
@@ -18,18 +18,10 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-import com.chaekibackend.book.domain.entity.Book;
-import com.chaekibackend.book.domain.interfaces.BookRepository;
-import com.chaekibackend.chellenge.api.request.ChallengeRequest;
-import com.chaekibackend.chellenge.api.response.ChallengeResponse;
-import com.chaekibackend.chellenge.domain.entity.Challenge;
-import com.chaekibackend.chellenge.domain.entity.ChallengeMember;
-import com.chaekibackend.chellenge.domain.entity.ChallengeStatus;
-import com.chaekibackend.chellenge.domain.service.ChallengeMemberService;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-import java.sql.Array;
 
 @Service
 @RequiredArgsConstructor
@@ -39,17 +31,25 @@ public class ChallengeAppService {
     private final BookRepository bookRepository;
     private final UsersService usersService;
     private final ChallengeMemberService memberService;
+    private final ChaekiWeekService weekService;
 
-    public List<ChallengeResponse.Detail> createChallenge(ChallengeRequest.Create request) {
-        List<Challenge> challengeList = challengeService.createChallenge(request);
-        List<ChallengeResponse.Detail> challengeResponses = new ArrayList<>();
-
-        for(Challenge challenge : challengeList){
-            Book book = challenge.getBook();
-            challengeResponses.add(ChallengeResponse.Detail.from(challenge, book));
+    public ChallengeResponse.Detail createChallenge(ChallengeRequest.Create request) {
+        // todo: 쿼리 5번 실행되는 것 리팩토링 하기
+        /*
+            1. 챌린지 생성
+            2. Week 4개 생성
+         */
+        // 1. 챌린지 생성
+        Challenge savedChallenge = challengeService.createChallenge(request);
+        // 2. Week 4개 생성
+        LocalDate start = savedChallenge.getStartDate();
+        for (int i = 0; i < 4; i++) {
+            ChaekiWeek newWeek = ChaekiWeek.createNewWeek(savedChallenge, start);
+            start = start.plusDays(7);
+            weekService.save(newWeek);
         }
 
-        return challengeResponses;
+        return ChallengeResponse.Detail.from(savedChallenge, savedChallenge.getBook());
     }
 
     public ChallengeResponse.Detail readChallenge(Long id){

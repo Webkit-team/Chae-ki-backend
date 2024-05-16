@@ -9,7 +9,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
@@ -41,14 +40,13 @@ public class Challenge {
 
     public static Challenge from (ChallengeRequest.Create challenge, Book book){
         return Challenge.builder()
-                .no(challenge.getNo())
                 .name(challenge.getName())
                 .description(challenge.getDescription())
                 .startDate(challenge.getStartDate())
                 .endDate(challenge.getEndDate())
-                .memberCount(challenge.getMemberCount())
-//                .category (challenge.)
-//                .status(Challenge)            => 이건 어떻게 하지?
+                .memberCount(0)
+                .category (book.getCategory())
+                .status(ChallengeStatus.RECRUITING)
                 .book(book)
                 .build();
     }
