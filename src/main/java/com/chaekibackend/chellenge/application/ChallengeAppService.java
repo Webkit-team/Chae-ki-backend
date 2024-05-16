@@ -108,9 +108,9 @@ public class ChallengeAppService {
 //
 //    }
 
-    public ChallengeResponse.Join joinChallenge(ChallengeRequest.Join join) {
-        Challenge challenge = challengeService.readByNo(join.getCno());
-        Users user = usersService.readByNo(join.getUno());
+    public ChallengeResponse.Join joinChallenge(Long cno, Long uno) {
+        Challenge challenge = challengeService.readByNo(cno);
+        Users user = usersService.readByNo(uno);
         ChallengeMember newMember = ChallengeMember.createNewMember(challenge, user);
         ChallengeMember savedMember = memberService.save(newMember);
 

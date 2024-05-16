@@ -69,10 +69,10 @@ public class ChallengeController {
 //    @Operation(summary = "채키투데이 등록", description = "챌린지 참가자가 채키투데이를 등록합니다.")
 //    public ChallengeResponse.TodaySave createChaekiToday()
 
-    @PostMapping(value = "/challenges/members", produces = {MediaType.APPLICATION_JSON_VALUE})
+    @PostMapping(value = "/challenges/{cno}/members/{uno}", produces = {MediaType.APPLICATION_JSON_VALUE})
     @Operation(summary = "챌린지 참가", description = "사용자가 특정 챌린지에 참가합니다.")
-    public ChallengeResponse.Join joinChallenge(@RequestBody ChallengeRequest.Join join) {
-        return challengeAppService.joinChallenge(join);
+    public ChallengeResponse.Join joinChallenge(@PathVariable Long cno, @PathVariable Long uno) {
+        return challengeAppService.joinChallenge(cno, uno);
     }
 
     // todo: API 파라미터 설정하기

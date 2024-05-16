@@ -25,13 +25,6 @@ public class ChallengeRequest {
     }
 
     @Getter
-    @Schema(name = "ChallengeRequest.Join")
-    public static class Join {
-        private Long cno;
-        private Long uno;
-    }
-
-    @Getter
     @Schema(name = "ChallengeRequest.Create")
     public static class Create{
         private String name;
