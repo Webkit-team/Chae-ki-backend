@@ -6,7 +6,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 @Entity
 @Builder
@@ -20,7 +20,7 @@ public class ChaekiToday {
     private String content;
     private Integer readingPage;
     private Integer readingTime;
-    private LocalDateTime createdAt;
+    private LocalDate createdAt;
     private Integer likeCount;
     private Boolean visible;
     @ManyToOne
