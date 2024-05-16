@@ -3,7 +3,9 @@ package com.chaekibackend.chellenge.api.response;
 import com.chaekibackend.book.api.response.BookResponse;
 import com.chaekibackend.book.domain.entity.Book;
 import com.chaekibackend.chellenge.domain.entity.Challenge;
+import com.chaekibackend.chellenge.domain.entity.ChallengeMember;
 import com.chaekibackend.chellenge.domain.entity.ChallengeStatus;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -14,6 +16,24 @@ public class ChallengeResponse {
     @Builder
     @AllArgsConstructor
     @Getter
+    @Schema(name = "ChallengeResponse.Join")
+    public static class Join {
+        private Long challengeNo;
+        private Long userNo;
+
+        public static Join from(ChallengeMember member) {
+            return Join
+                    .builder()
+                    .challengeNo(member.getChallenge().getNo())
+                    .userNo(member.getUsers().getNo())
+                    .build();
+        }
+    }
+
+    @Builder
+    @AllArgsConstructor
+    @Getter
+    @Schema(name = "ChallengeResponse.Retrieval")
     public static class Retrieval {
         private Long no;
         private String name;
@@ -44,6 +64,7 @@ public class ChallengeResponse {
     @Builder
     @AllArgsConstructor
     @Getter
+    @Schema(name = "ChallengeResponse.Update")
     public static class Update{
         private Long no;
         private String name;

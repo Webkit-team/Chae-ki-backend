@@ -37,10 +37,10 @@ public class UsersService {
     }
 
     @Transactional
-    public Users readUser(Long uno) {
+    public Users readByNo(Long uno) {
         Optional<Users> foundUser = usersRepository.findById(uno);
         if (foundUser.isEmpty()) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "존재하지 않는 사용자입니다.");
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "사용자를 불러올 수 없습니다");
         }
         return foundUser.get();
     }

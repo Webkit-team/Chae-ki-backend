@@ -1,5 +1,6 @@
 package com.chaekibackend.chellenge.api.controller;
 
+import com.chaekibackend.chellenge.api.request.ChallengeRequest;
 import com.chaekibackend.chellenge.api.response.ChallengeResponse;
 import com.chaekibackend.chellenge.application.ChallengeAppService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -9,15 +10,20 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
 @Tag(name = "챌린지 관리")
 public class ChallengeController {
     private final ChallengeAppService challengeAppService;
+
+    @PostMapping(value = "/challenges/members", produces = {MediaType.APPLICATION_JSON_VALUE})
+    @Operation(summary = "챌린지 참가", description = "사용자가 특정 챌린지에 참가합니다.")
+    public ChallengeResponse.Join joinChallenge(@RequestBody ChallengeRequest.Join join) {
+        return challengeAppService.joinChallenge(join);
+    }
 
     // todo: API 파라미터 설정하기
     @GetMapping("/challenges")

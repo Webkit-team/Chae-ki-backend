@@ -2,10 +2,15 @@ package com.chaekibackend.chellenge.application;
 
 import com.chaekibackend.book.domain.entity.Book;
 import com.chaekibackend.book.domain.interfaces.BookRepository;
+import com.chaekibackend.chellenge.api.request.ChallengeRequest;
 import com.chaekibackend.chellenge.api.response.ChallengeResponse;
 import com.chaekibackend.chellenge.domain.entity.Challenge;
+import com.chaekibackend.chellenge.domain.entity.ChallengeMember;
 import com.chaekibackend.chellenge.domain.entity.ChallengeStatus;
+import com.chaekibackend.chellenge.domain.service.ChallengeMemberService;
 import com.chaekibackend.chellenge.domain.service.ChallengeService;
+import com.chaekibackend.users.domain.entity.Users;
+import com.chaekibackend.users.domain.service.UsersService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -22,6 +27,17 @@ import java.util.List;
 public class ChallengeAppService {
     private final ChallengeService challengeService;
     private final BookRepository bookRepository;
+    private final UsersService usersService;
+    private final ChallengeMemberService memberService;
+
+    public ChallengeResponse.Join joinChallenge(ChallengeRequest.Join join) {
+        Challenge challenge = challengeService.readByNo(join.getCno());
+        Users user = usersService.readByNo(join.getUno());
+        ChallengeMember newMember = ChallengeMember.createNewMember(challenge, user);
+        ChallengeMember savedMember = memberService.save(newMember);
+
+        return ChallengeResponse.Join.from(savedMember);
+    }
 
     public Page<ChallengeResponse.Retrieval> readAllChallenges(Pageable pageable, String status, String category, String searchQuery) {
         // 1. 챌린지 검색 기능

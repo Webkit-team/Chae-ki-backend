@@ -5,7 +5,6 @@ import com.chaekibackend.users.api.response.UsersResponse;
 import com.chaekibackend.users.domain.entity.Users;
 import com.chaekibackend.users.domain.service.S3Service;
 import com.chaekibackend.users.domain.service.UsersService;
-import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -21,7 +20,7 @@ public class UsersAppService {
     private final PasswordEncoder passwordEncoder;
 
     public UsersResponse.Detail readUser(Long uno) {
-        Users fountUser = usersService.readUser(uno);
+        Users fountUser = usersService.readByNo(uno);
 
         return UsersResponse.Detail.from(fountUser);
     }
@@ -34,7 +33,7 @@ public class UsersAppService {
 
     public UsersResponse.Update updateUser(Long uno, UsersRequest.Update user, MultipartFile file) {
         // uno로 유저 정보 조회
-        Users fountUser = usersService.readUser(uno);
+        Users fountUser = usersService.readByNo(uno);
 
         // 수정할 정보로 덮어쓰기
         if (! user.getNickname().isBlank()) {
