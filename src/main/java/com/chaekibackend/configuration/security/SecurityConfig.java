@@ -46,7 +46,7 @@ public class SecurityConfig {
         http.authorizeHttpRequests(auth -> auth // 경로마다 인가 작업
                 .requestMatchers("/signup", "/userRank","/bookList", "/challenge", "/challenge/**",
                         "/users/*/challenges", "users/*/chaekiTodays", "users/*/myReadingTime",
-                        "/challenge/books/{word}", "/books/{bno}", "/books/{bno}/users/{uno}").permitAll()
+                        "/challenge/books/{word}", "/books/{bno}").permitAll()
                 .requestMatchers("/login", "/", "/swagger-ui/**", "/v3/api-docs/**").permitAll()
                 .requestMatchers(HttpMethod.GET, "/challenges").permitAll()
                 .anyRequest().authenticated());

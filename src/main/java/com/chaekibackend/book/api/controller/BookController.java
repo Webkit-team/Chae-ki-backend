@@ -39,12 +39,22 @@ public class BookController {
         return bookAppService.searchBook(word);
     }
 
+    // 비회원 도서 상세 조회
     @Operation(summary = "도서 상세 조회", description = "도서 정보를 조회합니다.")
-    @GetMapping(value= "/books/{bno}")
-    public BookResponse.Detail readBook(@PathVariable("bno") Long bno) {
-        return bookAppService.readBook(bno);
+    @GetMapping(value = "/books/{bno}")
+    public BookResponse.Detail readBookLogout(@PathVariable("bno") Long bno) {
+        return bookAppService.readBook(bno, null);
     }
 
+    // 로그인한 회원 도서 상세 조회
+    @Operation(summary = "도서 상세 조회", description = "도서 정보를 조회합니다.")
+    @GetMapping(value = "/books/{bno}/users/{uno}")
+    public BookResponse.Detail readBookLogin(@PathVariable("bno") Long bno,
+                                             @PathVariable("uno") Long uno){
+        return bookAppService.readBook(bno, uno);
+    }
+
+    // 도서 찜 등록
     @Operation(summary = "도서 찜 등록", description = "도서를 사용자의 도서 찜 목록에 추가합니다.")
     @PostMapping(value = "/books/{bno}/users/{uno}")
     public void createLikeBook(@PathVariable("bno") Long bno, @PathVariable("uno") Long uno){

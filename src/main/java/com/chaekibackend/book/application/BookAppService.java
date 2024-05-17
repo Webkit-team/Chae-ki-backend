@@ -21,11 +21,22 @@ public class BookAppService {
                 .toList();
     }
 
-    public BookResponse.Detail readBook(Long no){
-        Book book = bookService.readBook(no);
-        return BookResponse.Detail.from(book);
-    }
+    // 도서 상세 조회 기능
+    public BookResponse.Detail readBook(Long bno, Long uno){
+        Book book = bookService.readBook(bno);
+        BookResponse.Detail res =  BookResponse.Detail.from(book);
 
+        if(uno != null) {
+            Boolean existBookLike = bookService.readBookLike(bno, uno);
+
+            if (existBookLike) {
+                res.setCheckLike(true);
+            }
+        }
+        return res;
+    }
+    
+    // 챌린지 등록 시 도서명 & 저자명으로 도서 검색 기능
     public List<BookResponse.Search> searchBook(String word){
         List<Book> searchList = bookService.searchBook(word);
         List<BookResponse.Search> searchBooks = new ArrayList<>();
@@ -36,6 +47,7 @@ public class BookAppService {
         return searchBooks;
     }
 
+    // 도서 찜 등록 기능
     public void createLikeBook(Long bno, Long uno){
         bookService.createLikeBook(bno, uno);
     }

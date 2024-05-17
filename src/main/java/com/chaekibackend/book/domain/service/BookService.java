@@ -83,6 +83,7 @@ public class BookService {
         bookRepository.saveAll(bookList);
     }
 
+    // 도서 상세 정보 조회
     public Book readBook(Long no){
         return bookRepository.findByNo(no);
     }
@@ -90,7 +91,16 @@ public class BookService {
     public List<Book> searchBook(String word){
         return bookRepository.findByNameOrWriter(word);
     }
-
+    
+    // 등록된 도서 찜 내역이 있는지 확인(조회)하는 메서드
+    public Boolean readBookLike(Long bno, Long uno){
+        LikeBook likeBook = likeBookRepository.findLikeBookByNo(bno, uno);
+        if(likeBook != null){
+            return true;
+        }else
+            return false;
+    }
+    
     public void createLikeBook(Long bno, Long uno){
         Book book = bookRepository.findByNo(bno);
         Users user = usersRepository.findByNo(uno);
