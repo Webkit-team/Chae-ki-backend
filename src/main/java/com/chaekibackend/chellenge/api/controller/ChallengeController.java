@@ -38,6 +38,7 @@ public class ChallengeController {
         return challengeAppService.readChallenge(no);
     }
 
+    // todo: 아래 3개 api UsersController로 이동시키기
     // 마이페이지 챌린지 목록 조회
     @GetMapping("/users/{uno}/challenges")
     @ResponseBody
@@ -46,29 +47,19 @@ public class ChallengeController {
     }
 
     // 마이페이지 채키투데이 목록 조회
-    @GetMapping("users/{uno}/chaekiTodays")
+    @GetMapping("/users/{uno}/chaekiTodays")
     @ResponseBody
     public List<ChaekiTodayResponse.Detail> GetMyChaekiTodays(@PathVariable("uno") Long uno){
         return challengeAppService.readMyChaekiTodays(uno);
     }
 
     // 마이페이지 독서 시간 목록 조회 (그래프용)
-    @GetMapping("users/{uno}/myReadingTime")
+    @GetMapping("/users/{uno}/myReadingTime")
     @ResponseBody
     public List<ReadingTimeResponse> GetMyReadingTimes(@PathVariable("uno") Long uno) {
         return challengeAppService.readMyReadingTimes(uno);
     }
       
-//    @PostMapping(value = "/challenges/timer/{uno}")
-//    @Operation(summary = "타이머 시간 등록", description = "타이머에 설정 시간을 누적합니다.")
-//    public Boolean saveTimer(@RequestParam Long uno, @RequestBody ChallengeRequest.TimerSave timer) {
-//
-//    }
-
-//    @PostMapping(value = "/challenges/todays/{uno}",produces = {MediaType.APPLICATION_JSON_VALUE})
-//    @Operation(summary = "채키투데이 등록", description = "챌린지 참가자가 채키투데이를 등록합니다.")
-//    public ChallengeResponse.TodaySave createChaekiToday()
-
     @PostMapping(value = "/challenges/{cno}/members/{uno}", produces = {MediaType.APPLICATION_JSON_VALUE})
     @Operation(summary = "챌린지 참가", description = "사용자가 특정 챌린지에 참가합니다.")
     public ChallengeResponse.Join joinChallenge(@PathVariable Long cno, @PathVariable Long uno) {

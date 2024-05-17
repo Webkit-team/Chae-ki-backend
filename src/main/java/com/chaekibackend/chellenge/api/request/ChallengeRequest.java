@@ -12,19 +12,6 @@ import java.time.LocalDateTime;
 
 public class ChallengeRequest {
     @Getter
-    @Schema(name = "")
-    public static class TimerSave {
-        private Integer time;
-    }
-
-    @Getter
-    @Schema(name = "ChallengeRequest.TodaySave")
-    public static class TodaySave {
-        private String content;
-//        private
-    }
-
-    @Getter
     @Schema(name = "ChallengeRequest.Create")
     public static class Create{
         private String name;

@@ -1,10 +1,7 @@
 package com.chaekibackend.chellenge.api.response;
 
 import com.chaekibackend.chellenge.domain.entity.ChaekiToday;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.time.LocalDate;
 
@@ -39,5 +36,37 @@ public class ChaekiTodayResponse {
         }
     }
 
+    @Builder
+    @AllArgsConstructor
+    @Getter
+    public static class Creation {
+        private Long todayNo;
+        private Long userNo;
+        private Long challengeNo;
 
+        public static Creation from(ChaekiToday today){
+            return Creation
+                    .builder()
+                    .todayNo(today.getNo())
+                    .userNo(today
+                            .getChallengeMember()
+                            .getUsers()
+                            .getNo())
+                    .challengeNo(today
+                            .getChallengeMember()
+                            .getChallenge()
+                            .getNo())
+                    .build();
+        }
+    }
+
+    @Builder
+    @AllArgsConstructor
+    @Getter
+    public static class TimeSave {
+        private Long userNo;
+        private Long challengeNo;
+        private Long todayNo;
+
+    }
 }

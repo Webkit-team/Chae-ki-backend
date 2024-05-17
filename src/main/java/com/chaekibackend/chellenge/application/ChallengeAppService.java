@@ -12,6 +12,7 @@ import com.chaekibackend.chellenge.domain.service.ChallengeMemberService;
 import com.chaekibackend.chellenge.domain.service.ChallengeService;
 import com.chaekibackend.users.domain.entity.Users;
 import com.chaekibackend.users.domain.service.UsersService;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -34,20 +35,8 @@ public class ChallengeAppService {
     private final ChaekiWeekService weekService;
 
     public ChallengeResponse.Detail createChallenge(ChallengeRequest.Create request) {
-        // todo: 쿼리 5번 실행되는 것 리팩토링 하기
-        /*
-            1. 챌린지 생성
-            2. Week 4개 생성
-         */
-        // 1. 챌린지 생성
         Challenge savedChallenge = challengeService.createChallenge(request);
-        // 2. Week 4개 생성
-        LocalDate start = savedChallenge.getStartDate();
-        for (int i = 0; i < 4; i++) {
-            ChaekiWeek newWeek = ChaekiWeek.createNewWeek(savedChallenge, start);
-            start = start.plusDays(7);
-            weekService.save(newWeek);
-        }
+
 
         return ChallengeResponse.Detail.from(savedChallenge, savedChallenge.getBook());
     }
@@ -103,16 +92,30 @@ public class ChallengeAppService {
         }
         return myReadingTimes;
     }
-    
-//    public Boolean saveTimer(Long uno, ChallengeRequest.TimerSave timer) {
-//
-//    }
 
+    @Transactional
     public ChallengeResponse.Join joinChallenge(Long cno, Long uno) {
         Challenge challenge = challengeService.readByNo(cno);
         Users user = usersService.readByNo(uno);
         ChallengeMember newMember = ChallengeMember.createNewMember(challenge, user);
+
+        // 챌린지 멤버 등록
         ChallengeMember savedMember = memberService.save(newMember);
+        // 챌린지 위크 4개 생성
+        LocalDate start = challenge.getStartDate();
+        for(int i = 0; i < 4; i++) {
+            ChaekiWeek newWeek = ChaekiWeek
+                    .builder()
+                    .startDate(start)
+                    .endDate(start.plusDays(6))
+                    .challenge(challenge)
+                    .challengeMember(savedMember)
+                    .startDate(start)
+                    .endDate(start.plusDays(6))
+                    .build();
+            start = start.plusDays(7);
+            weekService.save(newWeek);
+        }
 
         return ChallengeResponse.Join.from(savedMember);
     }

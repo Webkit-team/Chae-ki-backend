@@ -27,7 +27,6 @@ public class UsersResponse {
                     .nickname(user.getNickname())
                     .imageUrl(user.getImageUrl())
                     .point(user.getPoint())
-                    .totalReadingTime(user.getTotalReadingTime())
                     .expired(user.getExpired())
                     .build();
         }
