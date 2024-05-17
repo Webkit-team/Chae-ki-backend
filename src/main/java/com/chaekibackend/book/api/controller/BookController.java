@@ -9,16 +9,16 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
-@RestController     // JSON 형태로 객체 데이터 반환
+@RestController     // JSON 형태로 객체 데이터 반환 + 요청 처리 상태 자동 반환
 @RequiredArgsConstructor
 @Tag(name = "도서 관리")
 public class BookController {
     private final BookAppService bookAppService;
-    private final BookService bookService;
 
 //    @GetMapping("/bookList")
 //    @ResponseBody
@@ -33,15 +33,21 @@ public class BookController {
 //        return bookAppService.readAllBooks();
 //    }
 
-    @Operation(summary = "도서 검색", description = "도서 이름을 검색합니다.")
-    @GetMapping(value = "/challenge/books/{title}", produces = {MediaType.APPLICATION_JSON_VALUE})
-    public List<BookResponse.Search> searchBook(@PathVariable("title") String title){
-        return bookAppService.searchBook(title);
+    @Operation(summary = "도서 검색", description = "도서 이름과 저자명을 이용해 도서를 검색합니다.")
+    @GetMapping(value = "/challenge/books/{word}", produces = {MediaType.APPLICATION_JSON_VALUE})
+    public List<BookResponse.Search> searchBook(@PathVariable("word") String word){
+        return bookAppService.searchBook(word);
     }
 
     @Operation(summary = "도서 상세 조회", description = "도서 정보를 조회합니다.")
-    @GetMapping(value="/books/{no}")
-    public BookResponse.Detail readBook(@PathVariable("no") Long no) {
-        return bookAppService.readBook(no);
+    @GetMapping(value= "/books/{bno}")
+    public BookResponse.Detail readBook(@PathVariable("bno") Long bno) {
+        return bookAppService.readBook(bno);
+    }
+
+    @Operation(summary = "도서 찜 등록", description = "도서를 사용자의 도서 찜 목록에 추가합니다.")
+    @PostMapping(value = "/books/{bno}/users/{uno}")
+    public void createLikeBook(@PathVariable("bno") Long bno, @PathVariable("uno") Long uno){
+        bookAppService.createLikeBook(bno, uno);
     }
 }

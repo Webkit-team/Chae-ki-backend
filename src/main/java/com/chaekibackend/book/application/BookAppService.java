@@ -36,4 +36,8 @@ public class BookAppService {
         return searchBooks;
     }
 
+    public void createLikeBook(Long bno, Long uno){
+        bookService.createLikeBook(bno, uno);
+    }
+
 }

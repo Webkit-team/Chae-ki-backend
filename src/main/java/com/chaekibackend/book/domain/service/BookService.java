@@ -2,12 +2,18 @@ package com.chaekibackend.book.domain.service;
 
 import com.chaekibackend.book.api.response.AladinResponse;
 import com.chaekibackend.book.domain.entity.Book;
+import com.chaekibackend.book.domain.entity.LikeBook;
 import com.chaekibackend.book.domain.interfaces.BookRepository;
+import com.chaekibackend.book.domain.interfaces.LikeBookRepository;
 import com.chaekibackend.configuration.webClient.WebClientConfig;
+import com.chaekibackend.users.domain.entity.Users;
+import com.chaekibackend.users.domain.interfaces.UsersRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
+
+import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
@@ -17,8 +23,8 @@ import java.util.List;
 @Slf4j
 public class BookService {
     private final BookRepository bookRepository;
-    private final WebClient webClient;
-    private final WebClientConfig webClientConfig;
+    private final UsersRepository usersRepository;
+    private final LikeBookRepository likeBookRepository;
 
     public List<Book> readAllBooks() {
         return bookRepository.findAll();
@@ -83,6 +89,19 @@ public class BookService {
 
     public List<Book> searchBook(String word){
         return bookRepository.findByNameOrWriter(word);
+    }
+
+    public void createLikeBook(Long bno, Long uno){
+        Book book = bookRepository.findByNo(bno);
+        Users user = usersRepository.findByNo(uno);
+
+        LikeBook likeBook = LikeBook.builder()
+                .createdAt(LocalDate.now())
+                .users(user)
+                .book(book)
+                .build();
+
+        likeBookRepository.save(likeBook);
     }
 }
 
