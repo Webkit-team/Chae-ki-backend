@@ -26,10 +26,17 @@ public class BookController {
 //        return bookService.useWebClient();
 //    }
 
-    @Operation(summary = "도서 목록 조회", description = "도서 목록을 조회합니다.")
-    @GetMapping(value = "/books", produces = {MediaType.APPLICATION_JSON_VALUE})
-    public List<BookResponse.Detail> readAllBook() {
-        return bookAppService.readAllBooks();
+    // 도서 목록 조회가 아니라 챌린지 등록할 때 도서 검색하는 기능으로 변경해야 함.
+//    @Operation(summary = "도서 목록 조회", description = "도서 목록을 조회합니다.")
+//    @GetMapping(value = "/books", produces = {MediaType.APPLICATION_JSON_VALUE})
+//    public List<BookResponse.Detail> readAllBook() {
+//        return bookAppService.readAllBooks();
+//    }
+
+    @Operation(summary = "도서 검색", description = "도서 이름을 검색합니다.")
+    @GetMapping(value = "/challenge/books/{title}", produces = {MediaType.APPLICATION_JSON_VALUE})
+    public List<BookResponse.Search> searchBook(@PathVariable("title") String title){
+        return bookAppService.searchBook(title);
     }
 
     @Operation(summary = "도서 상세 조회", description = "도서 정보를 조회합니다.")

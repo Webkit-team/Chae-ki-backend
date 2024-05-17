@@ -48,6 +48,37 @@ public class BookResponse {
         }
     }
 
+    @Builder
+    @AllArgsConstructor
+    @Getter
+    @Schema(name = "BookResponse.Search")
+    public static class Search {
+        private Long no;
+        private String name;
+        private String category;
+        private String writer;
+        private Integer pageNumber;
+        private String publisher;
+        private String imageUrl;
+        private String isbnCode;
+        private LocalDate publishDate;
+
+        public static BookResponse.Search from(Book book){
+            return Search.builder()
+                    .no(book.getNo())
+                    .name(book.getName())
+                    .category(book.getCategory())
+                    .writer(book.getWriter())
+                    .pageNumber(book.getPageNumber())
+                    .publisher(book.getPublisher())
+                    .imageUrl(book.getImageUrl())
+                    .isbnCode(book.getIsbnCode())
+                    .publishDate(book.getPublishDate())
+                    .build();
+        }
+
+    }
+
 //    public static class GetList{
 //        private List<Book> bookList;
 //

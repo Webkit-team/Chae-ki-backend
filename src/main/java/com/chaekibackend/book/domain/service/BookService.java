@@ -80,5 +80,9 @@ public class BookService {
     public Book readBook(Long no){
         return bookRepository.findByNo(no);
     }
+
+    public List<Book> searchBook(String word){
+        return bookRepository.findByNameOrWriter(word);
+    }
 }
 

@@ -6,6 +6,7 @@ import com.chaekibackend.book.domain.service.BookService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -23,6 +24,16 @@ public class BookAppService {
     public BookResponse.Detail readBook(Long no){
         Book book = bookService.readBook(no);
         return BookResponse.Detail.from(book);
+    }
+
+    public List<BookResponse.Search> searchBook(String word){
+        List<Book> searchList = bookService.searchBook(word);
+        List<BookResponse.Search> searchBooks = new ArrayList<>();
+        for(Book book : searchList) {
+            searchBooks.add(BookResponse.Search.from((book)));
+        }
+
+        return searchBooks;
     }
 
 }
