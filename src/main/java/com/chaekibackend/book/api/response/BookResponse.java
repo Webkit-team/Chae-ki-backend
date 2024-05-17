@@ -19,6 +19,7 @@ public class BookResponse {
         private String name;
         private String category;
         private String writer;
+        private String translator;
         private String description;
         private Integer likeCount;
         private Integer pageNumber;
@@ -30,11 +31,19 @@ public class BookResponse {
         private LocalDate publishDate;
 
         public static BookResponse.Detail from(Book book) {
-            return BookResponse.Detail.builder()
+            String[] writers = book.getWriter().split("(지은이)");
+            String writer = writers[0];
+            String translator = null;
+            if(writers.length > 1) {
+                String splicedStr = writers[1].substring((writers[1].indexOf(("("))));
+                translator = splicedStr.substring(2, splicedStr.length() - 1);
+            }
+            return Detail.builder()
                     .no(book.getNo())
                     .name(book.getName())
                     .category(book.getCategory())
-                    .writer(book.getWriter())
+                    .writer(writer)
+                    .translator(translator)
                     .description(book.getDescription())
                     .likeCount(book.getLikeCount())
                     .pageNumber(book.getPageNumber())
