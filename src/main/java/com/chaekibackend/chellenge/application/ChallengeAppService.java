@@ -133,10 +133,13 @@ public class ChallengeAppService {
     public ChallengeResponse.Join joinChallenge(Long cno, Long uno) {
         Challenge challenge = challengeService.readByNo(cno);
         Users user = usersService.readByNo(uno);
-        ChallengeMember newMember = ChallengeMember.createNewMember(challenge, user);
-
-        // 챌린지 멤버 등록
-        ChallengeMember savedMember = memberService.save(newMember);
+        // 새 챌린지 멤버 생성
+        ChallengeMember member = ChallengeMember.builder()
+                .users(user)
+                .challenge(challenge)
+                .build();
+        // 새 챌린지 멤버 등록
+        ChallengeMember savedMember = memberService.save(member);
 
         return ChallengeResponse.Join.from(savedMember);
     }
