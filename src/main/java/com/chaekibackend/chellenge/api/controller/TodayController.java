@@ -18,7 +18,7 @@ public class TodayController {
     @GetMapping("today/challenges/{cno}/users/{uno}")
     @Operation(summary = "채키 투데이 작성 여부 조회",
             description = "사용자의 오늘 채키투데이 작성 여부를 조회합니다.")
-    public Boolean checkUserPost(@PathVariable("cno") Long challengeNo, @PathVariable("uno") Long userNo) {
+    public ChaekiTodayResponse.Posted checkUserPost(@PathVariable("cno") Long challengeNo, @PathVariable("uno") Long userNo) {
         return todayAppService.checkUserPost(challengeNo, userNo);
     }
 
@@ -33,8 +33,5 @@ public class TodayController {
         return todayAppService.registerToday(challengeNo, userNo, request);
     }
 
-//    @GetMapping("/today")
-//    @Operation(summary = "채키투데이 목록조회",
-//            description = "채키투데이 목록을 조회합니다.")
-
+//    @PutMapping("today/{tno}")
 }

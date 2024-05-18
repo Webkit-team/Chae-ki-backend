@@ -69,4 +69,13 @@ public class ChaekiTodayResponse {
         private Long todayNo;
 
     }
+
+    @Builder
+    @AllArgsConstructor
+    @Getter
+    public static class Posted {
+        private Boolean posted;
+        @Setter
+        private Long todayNo;
+    }
 }

@@ -25,18 +25,30 @@ public class TodayAppService {
     private final ChaekiWeekService chaekiWeekService;
     private final ChaekiTodayService chaekiTodayService;
 
-    public Boolean checkUserPost(Long challengeNo, Long userNo) {
+    public ChaekiTodayResponse.Posted checkUserPost(Long challengeNo, Long userNo) {
         LocalDate now = LocalDate.now();
+        // todo: 예외발생 로직을 MemberService로 넣기
         Optional<ChallengeMember> optional = memberService.readByUserAndChallenge(userNo, challengeNo);
         if(optional.isEmpty()){
             log.error("존재하지 않는 챌린지 멤버입니다.");
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "존재하지 않는 챌린지 멤버입니다.");
         }
 
-        return optional.get()
+        boolean posted = optional.get()
                 .getTodayList()
                 .stream()
                 .anyMatch(today -> now.isEqual(today.getCreatedAt()));
+
+        ChaekiTodayResponse.Posted result = ChaekiTodayResponse.Posted.builder()
+                .posted(posted)
+                .build();
+
+        if(posted) {
+            ChaekiToday today = chaekiTodayService.findByChallengeAndUserAndDate(challengeNo, userNo, LocalDate.now());
+            result.setTodayNo(today.getNo());
+        }
+
+        return result;
     }
 
     public ChaekiTodayResponse.Creation registerToday(Long challengeNo, Long userNo, ChaekiTodayRequest.Creation request) {

@@ -20,6 +20,7 @@ public class ChaekiWeekService {
         return weekRepository.save(week);
     }
 
+    @Transactional
     public Optional<ChaekiWeek> findByChallengeAndDate(Challenge challenge, LocalDate date) {
         return challenge.getWeekList()
                 .stream()
