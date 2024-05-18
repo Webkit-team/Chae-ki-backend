@@ -40,18 +40,24 @@ public class TodayAppService {
     }
 
     public ChaekiTodayResponse.Creation registerToday(Long challengeNo, Long userNo, ChaekiTodayRequest.Creation request) {
-        /*
-            챌린지 멤버 조회
-            당일 날짜가 포함된 채키 위크 조회
-            채키 투데이 등록
-         */
+        // 챌린지 멤버 조회
         Optional<ChallengeMember> optional = memberService.readByUserAndChallenge(userNo, challengeNo);
         if(optional.isEmpty()) {
             log.error("존재하지 않는 챌린지 멤버입니다.");
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "존재하지 않는 챌린지 멤버입니다.");
         }
         ChallengeMember member = optional.get();
-        ChaekiWeek week = chaekiWeekService.findByChallengeAndDate(member.getChallenge(), LocalDate.now());
+
+        // 특정 챌린지와 특정 날짜에 해당하는 채키위크 조회
+        Optional<ChaekiWeek> optionalWeek = chaekiWeekService.findByChallengeAndDate(member.getChallenge(), LocalDate.now());
+        if(optionalWeek.isEmpty()) {
+            log.error("존재하지 않는 챌린지 위크입니다.");
+            String now = LocalDate.now().toString();
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, now + "가 포함되는 챌린지 위크가 없습니다.");
+        }
+        ChaekiWeek week = optionalWeek.get();
+
+        // 채키투데이 저장
         ChaekiToday today = ChaekiToday.builder()
                 .content(request.getContent())
                 .readingPage(request.getReadingPage())
@@ -63,6 +69,7 @@ public class TodayAppService {
                 .challengeMember(member)
                 .build();
         ChaekiToday savedToday = chaekiTodayService.save(today);
+
         return ChaekiTodayResponse.Creation.from(savedToday);
     }
 }

@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -19,11 +20,10 @@ public class ChaekiWeekService {
         return weekRepository.save(week);
     }
 
-    public ChaekiWeek findByChallengeAndDate(Challenge challenge, LocalDate date) {
+    public Optional<ChaekiWeek> findByChallengeAndDate(Challenge challenge, LocalDate date) {
         return challenge.getWeekList()
                 .stream()
                 .filter(week -> week.included(date))
-                .findFirst()
-                .get();
+                .findFirst();
     }
 }
