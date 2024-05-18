@@ -8,6 +8,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface ChallengeMemberRepository extends JpaRepository<ChallengeMember, Long> {
@@ -17,5 +18,5 @@ public interface ChallengeMemberRepository extends JpaRepository<ChallengeMember
             "JOIN cm.users u " +
             "JOIN cm.challenge c " +
             "WHERE u.no = :userNo AND c.no = :challengeNo")
-    ChallengeMember findByUserAndChallenge(@Param("userNo") Long userNo, @Param("challengeNo") Long challengeNo);
+    Optional<ChallengeMember> findByUserAndChallenge(@Param("userNo") Long userNo, @Param("challengeNo") Long challengeNo);
 }

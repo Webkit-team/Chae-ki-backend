@@ -10,9 +10,12 @@ import com.chaekibackend.chellenge.domain.service.ChaekiWeekService;
 import com.chaekibackend.chellenge.domain.service.ChallengeMemberService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.time.LocalDate;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -24,9 +27,14 @@ public class TodayAppService {
 
     public Boolean checkUserPost(Long challengeNo, Long userNo) {
         LocalDate now = LocalDate.now();
-        ChallengeMember member = memberService.readByUserAndChallenge(userNo, challengeNo);
+        Optional<ChallengeMember> optional = memberService.readByUserAndChallenge(userNo, challengeNo);
+        if(optional.isEmpty()){
+            log.error("존재하지 않는 챌린지 멤버입니다.");
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "존재하지 않는 챌린지 멤버입니다.");
+        }
 
-        return member.getTodayList()
+        return optional.get()
+                .getTodayList()
                 .stream()
                 .anyMatch(today -> now.isEqual(today.getCreatedAt()));
     }
@@ -37,7 +45,12 @@ public class TodayAppService {
             당일 날짜가 포함된 채키 위크 조회
             채키 투데이 등록
          */
-        ChallengeMember member = memberService.readByUserAndChallenge(userNo, challengeNo);
+        Optional<ChallengeMember> optional = memberService.readByUserAndChallenge(userNo, challengeNo);
+        if(optional.isEmpty()) {
+            log.error("존재하지 않는 챌린지 멤버입니다.");
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "존재하지 않는 챌린지 멤버입니다.");
+        }
+        ChallengeMember member = optional.get();
         ChaekiWeek week = chaekiWeekService.findByChallengeAndDate(member.getChallenge(), LocalDate.now());
         ChaekiToday today = ChaekiToday.builder()
                 .content(request.getContent())
