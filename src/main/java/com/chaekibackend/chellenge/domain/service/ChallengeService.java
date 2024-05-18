@@ -92,10 +92,6 @@ public class ChallengeService {
         return chaekiTodays;
     }
 
-//    public List<> readMyReadingTimes(Long no){
-//
-//    }
-  
     @Transactional
     public Challenge readByNo(Long no) {
         Optional<Challenge> optional = challengeRepository.findById(no);
@@ -113,5 +109,10 @@ public class ChallengeService {
             return challengeRepository.findByStatusAndCategory(needStatus, category, pageable);
         }
         return challengeRepository.findByStatus(needStatus, pageable); // status로 챌린지 목록 조회
+    }
+
+    @Transactional
+    public Challenge save(Challenge challenge) {
+        return challengeRepository.save(challenge);
     }
 }

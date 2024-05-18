@@ -19,11 +19,6 @@ public class ChaekiWeekService {
         return weekRepository.save(week);
     }
 
-    @Transactional
-    public ChaekiWeek findByChallengeAndUser(Long challengeNo, Long userNo) {
-        return weekRepository.findByChallengeAndUser(challengeNo, userNo);
-    }
-
     public ChaekiWeek findByChallengeAndDate(Challenge challenge, LocalDate date) {
         return challenge.getWeekList()
                 .stream()

@@ -18,11 +18,14 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -35,10 +38,43 @@ public class ChallengeAppService {
     private final ChaekiWeekService weekService;
 
     public ChallengeResponse.Detail createChallenge(ChallengeRequest.Create request) {
-        Challenge savedChallenge = challengeService.createChallenge(request);
+        Optional<Book> result = bookRepository.findById(request.getBookNo());
+        if (result.isEmpty()) {
+            log.error("존재하지 않는 book no입니다.");
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "존재하지 않는 책을 조회하려고 했습니다.");
+        }
+        Book book = result.get();
+        // 새 챌린지 생성
+        Challenge challenge = Challenge.builder()
+                .name(request.getName())
+                .description(request.getDescription())
+                .startDate(request.getStartDate())
+                .endDate(request.getEndDate())
+                .memberCount(0)
+                .category(book.getCategory())
+                .status(ChallengeStatus.RECRUITING)
+                .book(book)
+                .build();
 
+        // 새 챌린지의 위크 4개 생성
+        LocalDate start = challenge.getStartDate();
+        List<ChaekiWeek> weeks = new ArrayList<>();
+        for(int i = 0; i < 4; i++) {
+            ChaekiWeek newWeek = ChaekiWeek
+                    .builder()
+                    .startDate(start)
+                    .endDate(start.plusDays(6))
+                    .challenge(challenge)
+                    .build();
+            weeks.add(newWeek);
+            start = start.plusDays(7);
+        }
 
-        return ChallengeResponse.Detail.from(savedChallenge, savedChallenge.getBook());
+        // 새 챌린지와 새 위크 저장
+        challengeService.save(challenge);
+        weeks.forEach(weekService::save);
+
+        return ChallengeResponse.Detail.from(challenge, challenge.getBook());
     }
 
     public ChallengeResponse.Detail readChallenge(Long id){
@@ -101,21 +137,6 @@ public class ChallengeAppService {
 
         // 챌린지 멤버 등록
         ChallengeMember savedMember = memberService.save(newMember);
-        // 챌린지 위크 4개 생성
-        LocalDate start = challenge.getStartDate();
-        for(int i = 0; i < 4; i++) {
-            ChaekiWeek newWeek = ChaekiWeek
-                    .builder()
-                    .startDate(start)
-                    .endDate(start.plusDays(6))
-                    .challenge(challenge)
-                    .challengeMember(savedMember)
-                    .startDate(start)
-                    .endDate(start.plusDays(6))
-                    .build();
-            start = start.plusDays(7);
-            weekService.save(newWeek);
-        }
 
         return ChallengeResponse.Join.from(savedMember);
     }

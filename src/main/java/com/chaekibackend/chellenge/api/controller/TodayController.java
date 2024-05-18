@@ -32,4 +32,9 @@ public class TodayController {
     ) {
         return todayAppService.registerToday(challengeNo, userNo, request);
     }
+
+//    @GetMapping("/today")
+//    @Operation(summary = "채키투데이 목록조회",
+//            description = "채키투데이 목록을 조회합니다.")
+
 }
