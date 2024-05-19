@@ -16,5 +16,6 @@ public class ChaekiTodayRequest {
     @Getter
     public static class TimerSave {
         private Integer time;
+        private Integer page;
     }
 }

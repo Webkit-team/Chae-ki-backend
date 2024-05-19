@@ -6,6 +6,7 @@ import com.chaekibackend.chellenge.application.TodayAppService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -33,5 +34,15 @@ public class TodayController {
         return todayAppService.registerToday(challengeNo, userNo, request);
     }
 
-//    @PutMapping("today/{tno}")
+    @PutMapping("today/{todayNo}")
+    @Operation(summary = "집중시간 저장",
+            description = "종료된 타이머의 시간을 저장합니다.")
+    public ResponseEntity<Void> saveTimerTime(
+            @PathVariable Long todayNo,
+            @RequestBody ChaekiTodayRequest.TimerSave request
+    ) {
+        todayAppService.saveTimer(todayNo, request);
+
+        return ResponseEntity.ok().build();
+    }
 }

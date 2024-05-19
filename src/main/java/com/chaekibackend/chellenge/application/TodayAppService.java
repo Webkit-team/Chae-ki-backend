@@ -84,4 +84,14 @@ public class TodayAppService {
 
         return ChaekiTodayResponse.Creation.from(savedToday);
     }
+
+    public void saveTimer(Long todayNo, ChaekiTodayRequest.TimerSave request) {
+        ChaekiToday today = chaekiTodayService.findByNo(todayNo);
+        Integer time = today.getReadingTime() + request.getTime();
+
+        today.setReadingPage(request.getPage());
+        today.setReadingTime(time);
+
+        chaekiTodayService.save(today);
+    }
 }

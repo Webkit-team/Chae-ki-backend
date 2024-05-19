@@ -1,10 +1,7 @@
 package com.chaekibackend.chellenge.domain.entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.time.LocalDate;
 
@@ -18,7 +15,9 @@ public class ChaekiToday {
     @GeneratedValue
     private Long no;
     private String content;
+    @Setter
     private Integer readingPage;
+    @Setter
     private Integer readingTime;
     private LocalDate createdAt;
     private Integer likeCount;

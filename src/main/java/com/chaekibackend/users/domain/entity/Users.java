@@ -65,7 +65,6 @@ public class Users {
                 .role("USER")
                 .point(0)
                 .reportCount(0)
-                .imageUrl(imageUrl)
                 .expired(false)
                 .build();
     }

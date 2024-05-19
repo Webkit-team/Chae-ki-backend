@@ -60,7 +60,7 @@ public class ChallengeController {
         return challengeAppService.readMyReadingTimes(uno);
     }
       
-    @PostMapping(value = "/challenges/{cno}/members/{uno}", produces = {MediaType.APPLICATION_JSON_VALUE})
+    @PostMapping(value = "/challenges/{cno}/users/{uno}", produces = {MediaType.APPLICATION_JSON_VALUE})
     @Operation(summary = "챌린지 참가", description = "사용자가 특정 챌린지에 참가합니다.")
     public ChallengeResponse.Join joinChallenge(@PathVariable Long cno, @PathVariable Long uno) {
         return challengeAppService.joinChallenge(cno, uno);
@@ -71,7 +71,6 @@ public class ChallengeController {
     @Operation(summary = "챌린지 목록 조회", description = "페이지의 요소 개수, 페이지 번호, 챌린지 상태, 도서명, 저자명을 기준으로 챌린지 목록을 조회합니다.")
     public Page<ChallengeResponse.Retrieval> readAllChallenges(
             // todo: ChallengeSort enum을 매개변수로 받아서 처리하기
-            @Schema(type = "int", name = "page")
             @PageableDefault(page = 0, size = 10, sort = "startDate", direction = Sort.Direction.ASC) Pageable pageable,
             @RequestParam(defaultValue = "RECRUITING") String status,
             @RequestParam(required = false) String category, // 전달된 값이 없을 시, null 할당됨

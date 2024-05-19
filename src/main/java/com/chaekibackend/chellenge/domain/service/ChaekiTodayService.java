@@ -33,4 +33,15 @@ public class ChaekiTodayService {
 
         return result.get();
     }
+
+    @Transactional
+    public ChaekiToday findByNo(Long no) {
+        Optional<ChaekiToday> optional = todayRepository.findById(no);
+        if (optional.isEmpty()) {
+            log.info("존재하지 않는 채키투데이입니다.");
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "존재하지 않는 채키투데이입니다.");
+        }
+
+        return optional.get();
+    }
 }

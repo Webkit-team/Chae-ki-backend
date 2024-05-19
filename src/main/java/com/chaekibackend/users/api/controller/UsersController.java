@@ -54,7 +54,6 @@ public class UsersController {
             @PathVariable Long uno,
             @RequestPart(value = "password", required = false) String password,
             @RequestPart(value = "nickname", required = false) String nickname,
-            @Parameter(description = "프로필 이미지 파일")
             @RequestPart(value = "image", required = false) MultipartFile image
     ) {
         UsersRequest.Update users = UsersRequest.Update.builder()
