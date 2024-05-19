@@ -113,5 +113,9 @@ public class BookService {
 
         likeBookRepository.save(likeBook);
     }
+
+    public void deleteLikeBook(Long bno, Long uno){
+        likeBookRepository.deleteLikeBookByNo(bno, uno);
+    }
 }
 
