@@ -98,12 +98,4 @@ public class BookResponse {
         }
 
     }
-
-//    public static class GetList{
-//        private List<Book> bookList;
-//
-//        public static BookResponse.GetList from(){
-//            return BookResponse.GetList
-//        }
-//    }
 }

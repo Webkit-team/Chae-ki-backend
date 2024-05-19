@@ -23,6 +23,7 @@ public class ChallengeResponse {
         private LocalDate endDate;
         private Integer memberCount;
         private BookResponse.Detail bookDetail;
+
         public static ChallengeResponse.Detail from(Challenge challenge, Book book){
             BookResponse.Detail bookDetail = BookResponse.Detail.from(book);
 
