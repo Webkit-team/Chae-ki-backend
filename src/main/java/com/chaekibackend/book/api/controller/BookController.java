@@ -16,19 +16,6 @@ import java.util.List;
 public class BookController {
     private final BookAppService bookAppService;
 
-//    @GetMapping("/bookList")
-//    @ResponseBody
-//    public List<Book> getBookList(){
-//        return bookService.useWebClient();
-//    }
-
-    // 도서 목록 조회가 아니라 챌린지 등록할 때 도서 검색하는 기능으로 변경해야 함.
-//    @Operation(summary = "도서 목록 조회", description = "도서 목록을 조회합니다.")
-//    @GetMapping(value = "/books", produces = {MediaType.APPLICATION_JSON_VALUE})
-//    public List<BookResponse.Detail> readAllBook() {
-//        return bookAppService.readAllBooks();
-//    }
-
     @Operation(summary = "도서 검색", description = "도서 이름과 저자명을 이용해 도서를 검색합니다.")
     @GetMapping(value = "/challenge/books/{word}", produces = {MediaType.APPLICATION_JSON_VALUE})
     public List<BookResponse.Search> searchBook(@PathVariable("word") String word){
@@ -57,13 +44,6 @@ public class BookController {
                                @PathVariable("uno") Long uno){
         bookAppService.createLikeBook(bno, uno);
     }
-
-//    @Operation(summary = "도서 찜 삭제", description = "선택된 도서를 사용자의 도서 찜 목록에서 삭제합니다.")
-//    @DeleteMapping(value="/books/{bno}/users/{uno}")
-//    public void deleteLikeBook(@PathVariable("bno") Long bno,
-//                               @PathVariable("uno") Long uno){
-//        bookAppService.deleteLikeBook(bno, uno);
-//    }
 
     @Operation(summary = "도서 찜 삭제", description = "선택된 도서를 사용자의 도서 찜 목록에서 삭제합니다.")
     @DeleteMapping(value="/books/{bno}/users/{uno}")
