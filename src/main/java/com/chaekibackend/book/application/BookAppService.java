@@ -52,4 +52,9 @@ public class BookAppService {
         bookService.createLikeBook(bno, uno);
     }
 
+    // 찜 도서 삭제 기능
+    public void deleteLikeBook(Long bno, Long uno){
+        bookService.deleteLikeBook(bno, uno);
+    }
+
 }
