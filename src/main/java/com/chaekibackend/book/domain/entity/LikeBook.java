@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Entity
@@ -16,7 +17,7 @@ public class LikeBook {
     @Id
     @GeneratedValue
     private Long no;
-    private LocalDateTime createdAt;
+    private LocalDate createdAt;
     @ManyToOne
     @JoinColumn(name="uno")
     private Users users;
