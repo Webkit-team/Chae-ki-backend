@@ -2,15 +2,11 @@ package com.chaekibackend.book.api.controller;
 
 import com.chaekibackend.book.api.response.BookResponse;
 import com.chaekibackend.book.application.BookAppService;
-import com.chaekibackend.book.domain.service.BookService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -57,7 +53,22 @@ public class BookController {
     // 도서 찜 등록
     @Operation(summary = "도서 찜 등록", description = "도서를 사용자의 도서 찜 목록에 추가합니다.")
     @PostMapping(value = "/books/{bno}/users/{uno}")
-    public void createLikeBook(@PathVariable("bno") Long bno, @PathVariable("uno") Long uno){
+    public void createLikeBook(@PathVariable("bno") Long bno,
+                               @PathVariable("uno") Long uno){
         bookAppService.createLikeBook(bno, uno);
+    }
+
+//    @Operation(summary = "도서 찜 삭제", description = "선택된 도서를 사용자의 도서 찜 목록에서 삭제합니다.")
+//    @DeleteMapping(value="/books/{bno}/users/{uno}")
+//    public void deleteLikeBook(@PathVariable("bno") Long bno,
+//                               @PathVariable("uno") Long uno){
+//        bookAppService.deleteLikeBook(bno, uno);
+//    }
+
+    @Operation(summary = "도서 찜 삭제", description = "선택된 도서를 사용자의 도서 찜 목록에서 삭제합니다.")
+    @DeleteMapping(value="/books/{bno}/users/{uno}")
+    public void deleteLikeBook(@PathVariable("bno") Long bno,
+                               @PathVariable("uno") Long uno){
+        bookAppService.deleteLikeBook(bno, uno);
     }
 }
