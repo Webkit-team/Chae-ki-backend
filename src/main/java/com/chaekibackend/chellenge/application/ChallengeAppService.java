@@ -59,7 +59,7 @@ public class ChallengeAppService {
         // 새 챌린지의 위크 4개 생성
         LocalDate start = challenge.getStartDate();
         List<ChaekiWeek> weeks = new ArrayList<>();
-        for(int i = 0; i < 4; i++) {
+        for (int i = 0; i < 4; i++) {
             ChaekiWeek newWeek = ChaekiWeek
                     .builder()
                     .startDate(start)
@@ -77,7 +77,7 @@ public class ChallengeAppService {
         return ChallengeResponse.Detail.from(challenge, challenge.getBook());
     }
 
-    public ChallengeResponse.Detail readChallenge(Long id){
+    public ChallengeResponse.Detail readChallenge(Long id) {
         Challenge challenge = challengeService.readChallenge(id);
 
         Book book = challenge.getBook();
@@ -86,11 +86,11 @@ public class ChallengeAppService {
         return res;
     }
 
-    public List<ChallengeResponse.Detail> readMyChallenges(Long uno){
+    public List<ChallengeResponse.Detail> readMyChallenges(Long uno) {
         List<Challenge> myChallenges = challengeService.readMyChallenges(uno);
         List<ChallengeResponse.Detail> myChallengesDetail = new ArrayList<>();
 
-        for(Challenge challenge : myChallenges){
+        for (Challenge challenge : myChallenges) {
             Book book = challenge.getBook();
             myChallengesDetail.add(ChallengeResponse.Detail.from(challenge, book));
         }
@@ -98,28 +98,28 @@ public class ChallengeAppService {
         return myChallengesDetail;
     }
 
-    public List<ChaekiTodayResponse.Detail> readMyChaekiTodays(Long uno){
+    public List<ChaekiTodayResponse.Detail> readMyChaekiTodays(Long uno) {
         List<ChaekiToday> myChaekiTodays = challengeService.readMyChaekiTodays(uno);
         List<ChaekiTodayResponse.Detail> myChaekiTodaysDetail = new ArrayList<>();
 
-        for(ChaekiToday chaekiToday : myChaekiTodays){
+        for (ChaekiToday chaekiToday : myChaekiTodays) {
             myChaekiTodaysDetail.add(ChaekiTodayResponse.Detail.from(chaekiToday));
         }
 
         return myChaekiTodaysDetail;
     }
 
-    public List<ReadingTimeResponse> readMyReadingTimes(Long uno){
+    public List<ReadingTimeResponse> readMyReadingTimes(Long uno) {
         List<ChaekiToday> myChaekiTodays = challengeService.readMyChaekiTodays(uno);
         List<ReadingTimeResponse.Detail> ofFirstChallenge = new ArrayList<>();
         List<ReadingTimeResponse> myReadingTimes = new ArrayList<>();
-        
+
         // 여기서 에러남 -> DB에 데이터가 없어서 그런 듯!
         Long challengeNo = myChaekiTodays.get(0).getChallengeMember().getChallenge().getNo();
 
         // List를 멤버 변수로 가진 ResponseDto로 List를 만들어보기
-        for(ChaekiToday chaekiToday : myChaekiTodays){
-            if(!(challengeNo.equals(chaekiToday.getChallengeMember().getChallenge().getNo()))){
+        for (ChaekiToday chaekiToday : myChaekiTodays) {
+            if (!(challengeNo.equals(chaekiToday.getChallengeMember().getChallenge().getNo()))) {
                 myReadingTimes.add(ReadingTimeResponse.createReadingTimeResponse(chaekiToday, ofFirstChallenge));
                 challengeNo = chaekiToday.getChallengeMember().getChallenge().getNo();
                 ofFirstChallenge.clear();
@@ -153,7 +153,7 @@ public class ChallengeAppService {
 //            log.info("status : " + challengeStatus.name()); // todo: 추후 삭제
             for (Book book : books) {
                 for (Challenge challenge : book.getChallengeList()) {
-                    if(challengeStatus == challenge.getStatus()) {
+                    if (challengeStatus == challenge.getStatus()) {
                         challenges.add(challenge);
                     }
                 }
@@ -170,8 +170,10 @@ public class ChallengeAppService {
             return new PageImpl<>(subList, pageable, response.size());
         }
 
+
         // 2. 챌린지 목록 조회 기능
-        return challengeService.readAllChallenges(pageable, status, category)
+        return challengeService
+                .readAllChallenges(pageable, status, category)
                 .map(ChallengeResponse.Retrieval::from);
     }
 }

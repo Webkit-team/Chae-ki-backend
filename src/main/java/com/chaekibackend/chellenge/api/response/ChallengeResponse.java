@@ -80,7 +80,7 @@ public class ChallengeResponse {
         private Integer memberCount;
         private String category;
         private ChallengeStatus status;
-        private BookResponse.Detail book;
+        private BookResponse.Detail2 book;
 
         public static ChallengeResponse.Retrieval from(Challenge challenge) {
             return ChallengeResponse.Retrieval
@@ -93,7 +93,7 @@ public class ChallengeResponse {
                     .memberCount(challenge.getMemberCount())
                     .category(challenge.getCategory())
                     .status(challenge.getStatus())
-                    .book(BookResponse.Detail.from(challenge.getBook()))
+                    .book(BookResponse.Detail2.from(challenge.getBook()))
                     .build();
         }
     }
