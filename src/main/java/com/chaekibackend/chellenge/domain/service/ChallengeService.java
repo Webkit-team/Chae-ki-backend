@@ -48,25 +48,15 @@ public class ChallengeService {
         return challengeRepository.findById(id).orElseThrow();
     }
 
-    public List<Challenge> readMyChallenges(Long id){
-        Optional<Users> users = usersRepository.findById(id);
-        List<Challenge> myChallenges = new ArrayList<>();
+    public List<Challenge> readMyChallenges(Long no){
+       Users user = usersRepository.findByNo(no);
+       List<Challenge> myChallenges = new ArrayList<>();
 
-        users.ifPresent(value -> {
-            List<ChallengeMember> challengeMemberList = challengeMemberRepository.findByUsers(value);
-            for(ChallengeMember challengeMember : challengeMemberList){
-                myChallenges.add(challengeMember.getChallenge());
-            }
-        });
+        List<ChallengeMember> challengeMemberList = challengeMemberRepository.findByUsers(user);
+        for(ChallengeMember challengeMember : challengeMemberList){
+            myChallenges.add(challengeMember.getChallenge());
+        }
 
-        // user를 넘겨야 함
-//       List<ChallengeMember> challengeMemberList = challengeMemberRepository.findByUsers(id);
-//       List<Challenge> myChallenges = new ArrayList<>();
-//       for(ChallengeMember challengeMember : challengeMemberList){
-//           myChallenges.add(challengeMember.getChallenge());
-//       }
-
-        System.out.println("myChallenges = " + myChallenges);
        return myChallenges;
     }
 
