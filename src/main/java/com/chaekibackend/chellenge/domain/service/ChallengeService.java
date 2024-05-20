@@ -69,15 +69,13 @@ public class ChallengeService {
     }
 
     public List<ChaekiToday> readMyChaekiTodays(Long no){
-        Optional<Users> users = usersRepository.findById(no);
+        Users user = usersRepository.findByNo(no);
         List<ChaekiToday> chaekiTodays = new ArrayList<>();
 
-        users.ifPresent(u -> {
-            List<ChallengeMember> myChallengeMember = challengeMemberRepository.findByUsers(u);
-            for(ChallengeMember challengeMember : myChallengeMember){
-                chaekiTodays.addAll(chaekiTodayRepository.findByChallengeMember(challengeMember));
-            }
-        });
+        List<ChallengeMember> myChallengeMember = challengeMemberRepository.findByUsers(user);
+        for(ChallengeMember challengeMember : myChallengeMember){
+            chaekiTodays.addAll(chaekiTodayRepository.findByChallengeMember(challengeMember));
+        }
 
         return chaekiTodays;
     }
