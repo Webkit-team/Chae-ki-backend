@@ -53,7 +53,7 @@ public class ChallengeController {
         return challengeAppService.readMyChaekiTodays(uno);
     }
 
-    // 마이페이지 독서 시간 목록 조회 (그래프용)
+    // 마이페이지 독서 시간 목록 조회 (그래프용) -> 이거 수정해야 함
     @GetMapping("/users/{uno}/myReadingTime")
     @ResponseBody
     public List<ReadingTimeResponse> GetMyReadingTimes(@PathVariable("uno") Long uno) {

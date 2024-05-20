@@ -111,13 +111,16 @@ public class ChallengeAppService {
 
     public List<ReadingTimeResponse> readMyReadingTimes(Long uno) {
         List<ChaekiToday> myChaekiTodays = challengeService.readMyChaekiTodays(uno);
+        System.out.println("myCheckiTodays = " + myChaekiTodays);
         List<ReadingTimeResponse.Detail> ofFirstChallenge = new ArrayList<>();
         List<ReadingTimeResponse> myReadingTimes = new ArrayList<>();
 
-        // 여기서 에러남 -> DB에 데이터가 없어서 그런 듯!
-        Long challengeNo = myChaekiTodays.get(0).getChallengeMember().getChallenge().getNo();
+        Long challengeNo = null;
+        if(!(myChaekiTodays.isEmpty())){
+            challengeNo = myChaekiTodays.get(0).getChallengeMember().getChallenge().getNo();
+        }
 
-        // List를 멤버 변수로 가진 ResponseDto로 List를 만들어보기
+        // List를 멤버 변수로 가진 ResponseDto를 가진 List를 반환함
         for (ChaekiToday chaekiToday : myChaekiTodays) {
             if (!(challengeNo.equals(chaekiToday.getChallengeMember().getChallenge().getNo()))) {
                 myReadingTimes.add(ReadingTimeResponse.createReadingTimeResponse(chaekiToday, ofFirstChallenge));
@@ -126,6 +129,10 @@ public class ChallengeAppService {
             }
             ofFirstChallenge.add(ReadingTimeResponse.Detail.from(chaekiToday));
         }
+
+        myReadingTimes.add(ReadingTimeResponse.createReadingTimeResponse(
+                                myChaekiTodays.get(myChaekiTodays.size()-1), ofFirstChallenge));
+
         return myReadingTimes;
     }
 
