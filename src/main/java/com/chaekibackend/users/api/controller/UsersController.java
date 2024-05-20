@@ -6,12 +6,13 @@ import com.chaekibackend.users.application.UsersAppService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
@@ -71,5 +72,14 @@ public class UsersController {
     @Operation(summary = "회원랭킹조회", description = "회원 포인트에 따른 랭킹을 조회합니다.")
     public List<UsersResponse.Detail> readRankOfUsers (){
         return usersAppService.readRankOfUsers();
+    }
+
+    @GetMapping(value = "/users/duplication")
+    public UsersResponse.Duplication checkDuplication (@RequestParam String username) {
+        if(username == null || username.isBlank()) {
+            log.error("유효하지 않는 username 입니다.");
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "유효하지 않는 username 입니다.");
+        }
+        return usersAppService.checkDuplication(username);
     }
 }

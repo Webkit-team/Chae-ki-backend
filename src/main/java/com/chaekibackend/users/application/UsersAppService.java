@@ -78,4 +78,13 @@ public class UsersAppService {
 
         return readUsersRank;
     }
+
+    public UsersResponse.Duplication checkDuplication(String username) {
+        Boolean canUse = usersService.checkDuplication(username);
+
+        return UsersResponse.Duplication
+                .builder()
+                .available(canUse)
+                .build();
+    }
 }

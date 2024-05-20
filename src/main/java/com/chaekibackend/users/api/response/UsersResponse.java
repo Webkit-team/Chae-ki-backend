@@ -101,4 +101,11 @@ public class UsersResponse {
                     .build();
         }
     }
+
+    @Builder
+    @AllArgsConstructor
+    @Getter
+    public static class Duplication {
+        private Boolean available;
+    }
 }

@@ -61,6 +61,11 @@ public class UsersService {
         return usersRepository.save(saving);
     }
 
+    @Transactional
+    public Boolean checkDuplication(String username) {
+        return usersRepository.existsByUsername(username);
+    }
+
     public List<Users> readRankOfUsers(){
         return usersRepository.findAll(Sort.by(Sort.Direction.DESC, "point"));
     }
