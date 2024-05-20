@@ -138,6 +138,11 @@ public class ChallengeAppService {
 
     @Transactional
     public ChallengeResponse.Join joinChallenge(Long cno, Long uno) {
+        Optional<ChallengeMember> opt = memberService.readByUserAndChallenge(uno, cno);
+        if (opt.isPresent()) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "이미 참가한 사용자입니다.");
+        }
+
         Challenge challenge = challengeService.readByNo(cno);
         Users user = usersService.readByNo(uno);
         // 새 챌린지 멤버 생성
