@@ -7,14 +7,9 @@ import com.chaekibackend.chellenge.domain.interfaces.ChallengeRepository;
 import com.chaekibackend.book.domain.entity.Book;
 import com.chaekibackend.book.domain.interfaces.BookRepository;
 import com.chaekibackend.chellenge.api.request.ChallengeRequest;
-import com.chaekibackend.chellenge.api.response.ChaekiTodayResponse;
 import com.chaekibackend.chellenge.domain.entity.ChaekiToday;
-import com.chaekibackend.chellenge.domain.entity.Challenge;
-import com.chaekibackend.chellenge.domain.entity.ChallengeMember;
-import com.chaekibackend.chellenge.domain.entity.ChallengeStatus;
 import com.chaekibackend.chellenge.domain.interfaces.ChaekiTodayRepository;
 import com.chaekibackend.chellenge.domain.interfaces.ChallengeMemberRepository;
-import com.chaekibackend.chellenge.domain.interfaces.ChallengeRepository;
 import com.chaekibackend.users.domain.entity.Users;
 import com.chaekibackend.users.domain.interfaces.UsersRepository;
 import jakarta.transaction.Transactional;
@@ -28,7 +23,6 @@ import org.springframework.web.server.ResponseStatusException;
 import java.util.Optional;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
