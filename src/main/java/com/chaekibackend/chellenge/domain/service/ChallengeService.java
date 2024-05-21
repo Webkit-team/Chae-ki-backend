@@ -78,7 +78,8 @@ public class ChallengeService {
     public Challenge readByNo(Long no) {
         Optional<Challenge> optional = challengeRepository.findById(no);
         if (optional.isEmpty()) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "챌린지를 찾을 수 없습니다.");
+            log.error("존재하지 않는 챌린지입니다.");
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "존재하지 않는 챌린지입니다.");
         }
         return optional.get();
     }
