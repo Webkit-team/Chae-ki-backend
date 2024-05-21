@@ -34,10 +34,6 @@ public class BookResponse {
         // 찜 등록 기록 있음 -> true / 찜 등록 기록 없음 -> false
         private Boolean checkLike;
 
-        public Detail(){
-            this.checkLike = false;
-        }
-
         public static BookResponse.Detail from(Book book) {
             // (데이터 가공) 응답Dto(BookResponse.Detail)에서 지은이와 옮긴이를 분리해서 담아줌
             String[] writers = book.getWriter().split("\\(지은이\\)");
@@ -67,6 +63,7 @@ public class BookResponse {
                     .price(book.getPrice())
                     .isbnCode(book.getIsbnCode())
                     .publishDate(book.getPublishDate())
+                    .checkLike(false)
                     .build();
         }
     }

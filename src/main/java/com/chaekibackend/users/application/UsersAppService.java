@@ -24,7 +24,6 @@ public class UsersAppService {
 
     public UsersResponse.Detail readUser(Long uno) {
         Users fountUser = usersService.readByNo(uno);
-
         return UsersResponse.Detail.from(fountUser);
     }
 

@@ -15,12 +15,15 @@ public class UsersResponse {
         private Long no;
         private String username;
         private String nickname;
+        private String password;
         private String imageUrl;
         private Integer point;
         private Integer totalReadingTime;
         private Boolean expired;
 
         public static UsersResponse.Detail from(Users user) {
+
+
             return Detail.builder()
                     .no(user.getNo())
                     .username(user.getUsername())
@@ -92,12 +95,14 @@ public class UsersResponse {
         private Long no;
         private String username;
         private String role;
+        private Boolean expired;
 
         public static Login from(Users findUser) {
             return Login.builder()
                     .no(findUser.getNo())
                     .username(findUser.getUsername())
                     .role(findUser.getRole())
+                    .expired(findUser.getExpired())
                     .build();
         }
     }

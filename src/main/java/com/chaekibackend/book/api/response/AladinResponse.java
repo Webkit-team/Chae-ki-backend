@@ -1,6 +1,7 @@
 package com.chaekibackend.book.api.response;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -15,6 +16,7 @@ public class AladinResponse {
         private List<BookResponse> item;
     }
 
+    @Builder
     @Data
     @NoArgsConstructor
     @AllArgsConstructor

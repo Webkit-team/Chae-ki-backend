@@ -9,6 +9,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequiredArgsConstructor
 @Tag(name = "채키 투데이 관리")
@@ -44,5 +46,10 @@ public class TodayController {
         todayAppService.saveTimer(todayNo, request);
 
         return ResponseEntity.ok().build();
+    }
+
+    @GetMapping("/today/list")
+    public List<ChaekiTodayResponse.Detail> getTodayList() {
+        return todayAppService.getTodayList();
     }
 }

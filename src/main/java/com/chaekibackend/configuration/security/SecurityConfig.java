@@ -49,6 +49,8 @@ public class SecurityConfig {
                 .requestMatchers("/login", "/", "/swagger-ui/**", "/v3/api-docs/**").permitAll()
                 .requestMatchers(HttpMethod.GET, "/challenges").permitAll()
                 .requestMatchers(HttpMethod.GET, "/users/duplication").permitAll()
+                .requestMatchers(HttpMethod.GET, "/today/list").permitAll()
+                .requestMatchers(HttpMethod.GET, "/challenges/{no}").permitAll()
                 .anyRequest().authenticated());
         http.sessionManagement(session -> session // 세션을 비상태로 설정
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS));

@@ -10,11 +10,14 @@ import com.chaekibackend.chellenge.domain.service.ChaekiWeekService;
 import com.chaekibackend.chellenge.domain.service.ChallengeMemberService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -29,7 +32,7 @@ public class TodayAppService {
         LocalDate now = LocalDate.now();
         // todo: 예외발생 로직을 MemberService로 넣기
         Optional<ChallengeMember> optional = memberService.readByUserAndChallenge(userNo, challengeNo);
-        if(optional.isEmpty()){
+        if (optional.isEmpty()) {
             log.error("존재하지 않는 챌린지 멤버입니다.");
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "존재하지 않는 챌린지 멤버입니다.");
         }
@@ -43,7 +46,7 @@ public class TodayAppService {
                 .posted(posted)
                 .build();
 
-        if(posted) {
+        if (posted) {
             ChaekiToday today = chaekiTodayService.findByChallengeAndUserAndDate(challengeNo, userNo, LocalDate.now());
             result.setTodayNo(today.getNo());
         }
@@ -54,7 +57,7 @@ public class TodayAppService {
     public ChaekiTodayResponse.Creation registerToday(Long challengeNo, Long userNo, ChaekiTodayRequest.Creation request) {
         // 챌린지 멤버 조회
         Optional<ChallengeMember> optional = memberService.readByUserAndChallenge(userNo, challengeNo);
-        if(optional.isEmpty()) {
+        if (optional.isEmpty()) {
             log.error("존재하지 않는 챌린지 멤버입니다.");
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "존재하지 않는 챌린지 멤버입니다.");
         }
@@ -62,7 +65,7 @@ public class TodayAppService {
 
         // 특정 챌린지와 특정 날짜에 해당하는 채키위크 조회
         Optional<ChaekiWeek> optionalWeek = chaekiWeekService.findByChallengeAndDate(member.getChallenge(), LocalDate.now());
-        if(optionalWeek.isEmpty()) {
+        if (optionalWeek.isEmpty()) {
             log.error("존재하지 않는 챌린지 위크입니다.");
             String now = LocalDate.now().toString();
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, now + "가 포함되는 챌린지 위크가 없습니다.");
@@ -93,5 +96,13 @@ public class TodayAppService {
         today.setReadingTime(time);
 
         chaekiTodayService.save(today);
+    }
+
+    public List<ChaekiTodayResponse.Detail> getTodayList() {
+        Page<ChaekiToday> todays = chaekiTodayService.fetchTodayList(PageRequest.of(0, 10));
+        return todays
+                .get()
+                .map(ChaekiTodayResponse.Detail::from)
+                .toList();
     }
 }

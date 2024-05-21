@@ -3,10 +3,7 @@ package com.chaekibackend.chellenge.domain.entity;
 import com.chaekibackend.book.domain.entity.Book;
 import com.chaekibackend.chellenge.api.request.ChallengeRequest;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -23,7 +20,9 @@ public class Challenge {
     private Long no;
     private String name;
     private String description;
+    @Setter
     private LocalDate startDate;
+    @Setter
     private LocalDate endDate;
     private Integer memberCount;
     private String category;
