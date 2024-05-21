@@ -5,6 +5,7 @@ import com.chaekibackend.users.domain.entity.Users;
 import com.chaekibackend.users.domain.interfaces.UsersRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -66,6 +67,7 @@ public class UsersService {
         return usersRepository.existsByUsername(username);
     }
 
+    @Transactional
     public List<Users> readRankOfUsers(){
         return usersRepository.findAll(Sort.by(Sort.Direction.DESC, "point"));
     }

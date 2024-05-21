@@ -68,14 +68,13 @@ public class UsersAppService {
     }
 
     public List<UsersResponse.Detail> readRankOfUsers(){
-        List<UsersResponse.Detail> readUsersRank = new ArrayList<>();
         List<Users> usersRanking = usersService.readRankOfUsers();
+        List<Users> sliced = usersRanking.subList(0, Math.min(usersRanking.size(), 3));
 
-        for(Users user : usersRanking){
-            readUsersRank.add(UsersResponse.Detail.from(user));
-        }
-
-        return readUsersRank;
+        return sliced
+                .stream()
+                .map(UsersResponse.Detail::from)
+                .toList();
     }
 
     public UsersResponse.Duplication checkDuplication(String username) {
