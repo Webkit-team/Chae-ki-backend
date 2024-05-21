@@ -51,6 +51,7 @@ public class SecurityConfig {
                 .requestMatchers(HttpMethod.GET, "/users/duplication").permitAll()
                 .requestMatchers(HttpMethod.GET, "/today/list").permitAll()
                 .requestMatchers(HttpMethod.GET, "/challenges/{no}").permitAll()
+                .requestMatchers(HttpMethod.GET, "/challenges/{challengeNo}/week/{weekNumber}").permitAll()
                 .anyRequest().authenticated());
         http.sessionManagement(session -> session // 세션을 비상태로 설정
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS));

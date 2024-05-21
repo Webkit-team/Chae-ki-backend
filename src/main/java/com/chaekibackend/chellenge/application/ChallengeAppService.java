@@ -6,6 +6,7 @@ import com.chaekibackend.chellenge.api.request.ChallengeRequest;
 import com.chaekibackend.chellenge.api.response.ChaekiTodayResponse;
 import com.chaekibackend.chellenge.api.response.ChallengeResponse;
 import com.chaekibackend.chellenge.api.response.ReadingTimeResponse;
+import com.chaekibackend.chellenge.api.response.WeekResponse;
 import com.chaekibackend.chellenge.domain.entity.*;
 import com.chaekibackend.chellenge.domain.service.ChaekiWeekService;
 import com.chaekibackend.chellenge.domain.service.ChallengeMemberService;
@@ -116,7 +117,7 @@ public class ChallengeAppService {
         List<ReadingTimeResponse> myReadingTimes = new ArrayList<>();
 
         Long challengeNo = null;
-        if(!(myChaekiTodays.isEmpty())){
+        if (!(myChaekiTodays.isEmpty())) {
             challengeNo = myChaekiTodays.get(0).getChallengeMember().getChallenge().getNo();
         }
 
@@ -131,7 +132,7 @@ public class ChallengeAppService {
         }
 
         myReadingTimes.add(ReadingTimeResponse.createReadingTimeResponse(
-                                myChaekiTodays.get(myChaekiTodays.size()-1), ofFirstChallenge));
+                myChaekiTodays.get(myChaekiTodays.size() - 1), ofFirstChallenge));
 
         return myReadingTimes;
     }
@@ -187,5 +188,47 @@ public class ChallengeAppService {
         return challengeService
                 .readAllChallenges(pageable, status, category)
                 .map(ChallengeResponse.Retrieval::from);
+    }
+
+    public WeekResponse.WeekInfo getWeek(Long challengeNo, Integer weekNumber) {
+        // 챌린지 no로 챌린지 조회
+        Challenge challenge = challengeService.readByNo(challengeNo);
+        /*
+            챌린지, weekNumber 로 Week 조회
+            loop(챌린지의 멤버들)
+                loop(멤버의 투데이들)
+                    필터링(Week에 포함되는 today)
+         */
+        ChaekiWeek week = null;
+        try {
+            week = challenge.getWeekList().get(weekNumber - 1);
+        } catch (IndexOutOfBoundsException e) {
+            log.error("잘못된 주 번호입니다.");
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "잘못된 주 번호입니다.");
+        }
+
+        List<WeekResponse.TodayInfo> resultTodays = new ArrayList<>();
+        for (ChallengeMember member : challenge.getMemberList()) {
+            List<WeekResponse.TodayDetail> todayDetails = new ArrayList<>();
+            for (ChaekiToday today : week.getTodayList()) {
+                LocalDate date = today.getCreatedAt();
+                if (week.included(date)) {
+                    todayDetails.add(WeekResponse.TodayDetail.from(today));
+                }
+            }
+            WeekResponse.TodayInfo todayInfo = WeekResponse.TodayInfo.from(member, todayDetails);
+            resultTodays.add(todayInfo);
+        }
+        // Week 로 Comment 리스트 조회
+        List<WeekResponse.CommentDetail> resultComments = week.getCommentList()
+                .stream()
+                .map(WeekResponse.CommentDetail::from)
+                .toList();
+
+        return WeekResponse.WeekInfo
+                .builder()
+                .users(resultTodays)
+                .comments(resultComments)
+                .build();
     }
 }

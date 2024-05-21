@@ -4,9 +4,9 @@ import com.chaekibackend.chellenge.api.request.ChallengeRequest;
 import com.chaekibackend.chellenge.api.response.ChaekiTodayResponse;
 import com.chaekibackend.chellenge.api.response.ChallengeResponse;
 import com.chaekibackend.chellenge.api.response.ReadingTimeResponse;
+import com.chaekibackend.chellenge.api.response.WeekResponse;
 import com.chaekibackend.chellenge.application.ChallengeAppService;
 import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -84,5 +84,13 @@ public class ChallengeController {
         }
 
         return challengeAppService.readAllChallenges(pageable, status, category, searchQuery);
+    }
+
+    @GetMapping("/challenges/{cno}/week/{wno}")
+    public WeekResponse.WeekInfo getWeek(
+            @PathVariable("cno") Long challengeNo,
+            @PathVariable("wno") Integer weekNumber
+    ) {
+        return challengeAppService.getWeek(challengeNo, weekNumber);
     }
 }

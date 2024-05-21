@@ -25,6 +25,7 @@ public class ChaekiWeek {
     private Challenge challenge;
 
     @OneToMany(mappedBy = "chaekiWeek", cascade = CascadeType.REMOVE, orphanRemoval = true)
+    @OrderBy("likeCount DESC")
     private List<ChaekiWeekComment> commentList;
 
     @OneToMany(mappedBy = "chaekiWeek", cascade = CascadeType.REMOVE, orphanRemoval = true)

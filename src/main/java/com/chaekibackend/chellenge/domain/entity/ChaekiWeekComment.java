@@ -29,6 +29,7 @@ public class ChaekiWeekComment {
     @ManyToOne
     @JoinColumn(name="challengeMember_no")
     private ChallengeMember challengeMember;
+
     @ManyToOne
     @JoinColumn(name="chaekiWeek_no")
     private ChaekiWeek chaekiWeek;

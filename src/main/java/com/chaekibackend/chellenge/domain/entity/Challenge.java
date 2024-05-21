@@ -33,7 +33,9 @@ public class Challenge {
     private Book book;
 
     @OneToMany(mappedBy = "challenge", cascade = CascadeType.REMOVE, orphanRemoval = true)
+    @OrderBy("startDate ASC")
     private List<ChaekiWeek> weekList;
+
     @OneToMany(mappedBy = "challenge", cascade = CascadeType.REMOVE, orphanRemoval = true)
     private List<ChallengeMember> memberList;
 
