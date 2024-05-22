@@ -66,12 +66,13 @@ public class ChallengeController {
         return challengeAppService.joinChallenge(cno, uno);
     }
 
-    // todo: API 파라미터 설정하기
+    // todo: page, size를 쿼리 파라미터로 받고, 이것으로 PageRequest 객체 생성하는 로직으로 변경
+    // todo: 정렬할 요소를 전달받아 그것으로 정렬 해보기
     @GetMapping("/challenges")
     @Operation(summary = "챌린지 목록 조회", description = "페이지의 요소 개수, 페이지 번호, 챌린지 상태, 도서명, 저자명을 기준으로 챌린지 목록을 조회합니다.")
     public Page<ChallengeResponse.Retrieval> readAllChallenges(
             // todo: ChallengeSort enum을 매개변수로 받아서 처리하기
-            @PageableDefault(page = 0, size = 10, sort = "startDate", direction = Sort.Direction.ASC) Pageable pageable,
+            @PageableDefault(page = 0, size = 10, sort = "startDate", direction = Sort.Direction.DESC) Pageable pageable,
             @RequestParam(defaultValue = "RECRUITING") String status,
             @RequestParam(required = false) String category, // 전달된 값이 없을 시, null 할당됨
             @RequestParam(required = false) String searchQuery // 전달된 값이 없을 시, null 할당됨
