@@ -5,7 +5,6 @@ import com.chaekibackend.users.domain.entity.Users;
 import com.chaekibackend.users.domain.interfaces.UsersRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;

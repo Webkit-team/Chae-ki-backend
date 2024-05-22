@@ -52,4 +52,13 @@ public class TodayController {
     public List<ChaekiTodayResponse.Detail> getTodayList() {
         return todayAppService.getTodayList();
     }
+
+    // 채키 투데이 좋아요
+    @PutMapping("/like/today/{todayNo}")
+    public ChaekiTodayResponse.Like likeToday(
+            @PathVariable("todayNo") Long todayNo,
+            @RequestBody ChaekiTodayRequest.Like request
+    ) {
+        return todayAppService.likeToday(todayNo, request);
+    }
 }

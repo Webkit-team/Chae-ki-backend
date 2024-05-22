@@ -12,17 +12,17 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
 class ChaeKiBackendApplicationTests {
-    private static final Logger log = LoggerFactory.getLogger(ChaeKiBackendApplicationTests.class);
-    @Autowired
-    private BookService bookService;
-    @Autowired
-    private BookRepository bookRepository;
-    @Autowired
-    private ChallengeRepository challengeRepository;
-    @Autowired
-    private UsersRepository usersRepository;
-    @Autowired
-    private ChallengeMemberRepository memberRepository;
+//    private static final Logger log = LoggerFactory.getLogger(ChaeKiBackendApplicationTests.class);
+//    @Autowired
+//    private BookService bookService;
+//    @Autowired
+//    private BookRepository bookRepository;
+//    @Autowired
+//    private ChallengeRepository challengeRepository;
+//    @Autowired
+//    private UsersRepository usersRepository;
+//    @Autowired
+//    private ChallengeMemberRepository memberRepository;
 
 //    @Test
 //    void bookFetchAndSave() {

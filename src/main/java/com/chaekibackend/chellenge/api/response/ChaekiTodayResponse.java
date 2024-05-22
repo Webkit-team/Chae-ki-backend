@@ -78,4 +78,23 @@ public class ChaekiTodayResponse {
         @Setter
         private Long todayNo;
     }
+
+    @Builder
+    @AllArgsConstructor
+    @Getter
+    public static class Like {
+        private Long todayNo;
+        private Integer likeCount;
+        private Boolean visible;
+        private LocalDate createdAt;
+
+        public static Like from (ChaekiToday today) {
+            return Like.builder()
+                    .todayNo(today.getNo())
+                    .likeCount(today.getLikeCount())
+                    .visible(today.getVisible())
+                    .createdAt(today.getCreatedAt())
+                    .build();
+        }
+    }
 }

@@ -105,4 +105,10 @@ public class TodayAppService {
                 .map(ChaekiTodayResponse.Detail::from)
                 .toList();
     }
+
+    public ChaekiTodayResponse.Like likeToday(Long todayNo, ChaekiTodayRequest.Like request) {
+        ChaekiToday modifiedToday = chaekiTodayService.likeToday(todayNo, request.getLiked());
+
+        return ChaekiTodayResponse.Like.from(modifiedToday);
+    }
 }

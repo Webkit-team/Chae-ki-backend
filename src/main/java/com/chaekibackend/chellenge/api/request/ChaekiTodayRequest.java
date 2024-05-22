@@ -18,4 +18,9 @@ public class ChaekiTodayRequest {
         private Integer time;
         private Integer page;
     }
+
+    @Getter
+    public static class Like {
+        private Boolean liked;
+    }
 }

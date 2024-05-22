@@ -12,7 +12,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.time.LocalDate;
-import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -51,5 +50,16 @@ public class ChaekiTodayService {
     @Transactional
     public Page<ChaekiToday> fetchTodayList(Pageable pageable) {
         return todayRepository.findByOrderByLikeCountDesc(pageable);
+    }
+
+    @Transactional
+    public ChaekiToday likeToday(Long todayNo, Boolean liked) {
+        Integer offset = liked ? 1 : -1;
+        ChaekiToday today = findByNo(todayNo);
+        int newLikeCount = today.getLikeCount() + offset;
+        newLikeCount = Math.max(newLikeCount, 0);
+        today.setLikeCount(newLikeCount);
+
+        return todayRepository.save(today);
     }
 }
