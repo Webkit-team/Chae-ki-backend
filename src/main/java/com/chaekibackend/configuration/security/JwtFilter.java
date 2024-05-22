@@ -22,16 +22,18 @@ public class JwtFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         log.info("jwt 필터 작동");
-        //request에서 Authorization 헤더를 찾음
+        // request에서 Authorization 헤더 조회
         String authorization= request.getHeader("Authorization");
 
         //Authorization 헤더 검증
         if (authorization == null || !authorization.startsWith("Bearer ")) {
-            System.out.println("token null");
+            log.error("JWT가 없습니다.");
             filterChain.doFilter(request, response);
 
             //조건이 해당되면 메소드 종료 (필수)
             response.setStatus(HttpServletResponse.SC_UNAUTHORIZED); // 미인증 에러를 응답(401)
+            response.setCharacterEncoding("utf-8");
+            response.getWriter().print("JWT가 없습니다.");
             return;
         }
 
@@ -40,10 +42,13 @@ public class JwtFilter extends OncePerRequestFilter {
 
         //토큰 소멸 시간 검증
         if (jwtUtil.isExpired(token)) {
-            log.info("만료된 토큰임");
+            log.error("만료된 토큰");
             filterChain.doFilter(request, response);
 
             //조건이 해당되면 메소드 종료 (필수)
+            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED); // 미인증 에러를 응답
+            response.setCharacterEncoding("utf-8");
+            response.getWriter().print("만료된 JWT입니다.");
             return;
         }
 
