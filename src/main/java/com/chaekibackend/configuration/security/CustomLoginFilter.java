@@ -67,8 +67,10 @@ public class CustomLoginFilter extends UsernamePasswordAuthenticationFilter {
 
     //로그인 실패시 실행하는 메소드
     @Override
-    protected void unsuccessfulAuthentication(HttpServletRequest request, HttpServletResponse response, AuthenticationException failed) {
+    protected void unsuccessfulAuthentication(HttpServletRequest request, HttpServletResponse response, AuthenticationException failed) throws IOException {
         //로그인 실패시 401 응답 코드 반환
         response.setStatus(401);
+        response.setCharacterEncoding("utf-8");
+        response.getWriter().print("로그인 실패");
     }
 }
