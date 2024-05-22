@@ -3,16 +3,23 @@ package com.chaekibackend.book.application;
 import com.chaekibackend.book.api.response.BookResponse;
 import com.chaekibackend.book.domain.entity.Book;
 import com.chaekibackend.book.domain.service.BookService;
+import com.chaekibackend.users.domain.entity.Users;
+import com.chaekibackend.users.domain.service.UsersService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class BookAppService {
     private final BookService bookService;
+    private final UsersService usersService;
 
     public List<BookResponse.Detail> readAllBooks() {
         return bookService.readAllBooks()
@@ -24,7 +31,13 @@ public class BookAppService {
     // 도서 상세 조회 기능
     public BookResponse.Detail readBook(Long bno, Long uno){
         Book book = bookService.readBook(bno);
+        if (book == null) {
+            log.error("존재하지 않는 책입니다.");
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "존재하지 않는 책입니다.");
+        }
         BookResponse.Detail res =  BookResponse.Detail.from(book);
+
+        usersService.readByNo(uno); // 예외처리 위한 코드
 
         if(uno != null) {
             Boolean existBookLike = bookService.readBookLike(bno, uno);
