@@ -10,6 +10,8 @@ import com.chaekibackend.users.domain.entity.Users;
 import com.chaekibackend.users.domain.interfaces.UsersRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 
@@ -44,7 +46,7 @@ public class BookService {
         categoryList.add("과학");
         categoryList.add("소설/시/희곡");
         categoryList.add("경제경영");
-        
+
         // 챌린지 카테고리 해당되지 않으면 DB에 안 들어가게 하기!
 
         AladinResponse.AladinTotalResponse res = webClient.get()
@@ -56,27 +58,27 @@ public class BookService {
         List<Book> bookList = new ArrayList<>();
         String bookCategory = "";
 
-        for(AladinResponse.BookResponse bookResponse : res.getItem()){
-            for (String str: categoryList) {
-                if(bookResponse.getCategoryName().contains(str)){
+        for (AladinResponse.BookResponse bookResponse : res.getItem()) {
+            for (String str : categoryList) {
+                if (bookResponse.getCategoryName().contains(str)) {
                     bookCategory = str;
                 }
             }
             bookList.add(
-                Book.builder()
-                        .name(bookResponse.getTitle())
-                        .category(bookCategory)
-                        .writer(bookResponse.getAuthor())
-                        .description(bookResponse.getDescription())
-                        .likeCount(0)
+                    Book.builder()
+                            .name(bookResponse.getTitle())
+                            .category(bookCategory)
+                            .writer(bookResponse.getAuthor())
+                            .description(bookResponse.getDescription())
+                            .likeCount(0)
 // TODO:                         .pageNumber()  => 직접 넣어주기
-                        .publisher(bookResponse.getPublisher())
-                        .imageUrl(bookResponse.getCover())
-                        .shopUrl(bookResponse.getLink())
-                        .price(bookResponse.getPriceStandard())
-                        .isbnCode(bookResponse.getIsbn())
-                        .publishDate(bookResponse.getPubDate())
-                        .build()
+                            .publisher(bookResponse.getPublisher())
+                            .imageUrl(bookResponse.getCover())
+                            .shopUrl(bookResponse.getLink())
+                            .price(bookResponse.getPriceStandard())
+                            .isbnCode(bookResponse.getIsbn())
+                            .publishDate(bookResponse.getPubDate())
+                            .build()
             );
         }
 
@@ -84,24 +86,24 @@ public class BookService {
     }
 
     // 도서 상세 정보 조회
-    public Book readBook(Long no){
+    public Book readBook(Long no) {
         return bookRepository.findByNo(no);
     }
 
-    public List<Book> searchBook(String word){
+    public List<Book> searchBook(String word) {
         return bookRepository.findByNameOrWriter(word);
     }
-    
+
     // 등록된 도서 찜 내역이 있는지 확인(조회)하는 메서드
-    public Boolean readBookLike(Long bno, Long uno){
+    public Boolean readBookLike(Long bno, Long uno) {
         LikeBook likeBook = likeBookRepository.findLikeBookByNo(bno, uno);
-        if(likeBook != null){
+        if (likeBook != null) {
             return true;
-        }else
+        } else
             return false;
     }
-    
-    public void createLikeBook(Long bno, Long uno){
+
+    public void createLikeBook(Long bno, Long uno) {
         Book book = bookRepository.findByNo(bno);
         Users user = usersRepository.findByNo(uno);
 
@@ -114,8 +116,12 @@ public class BookService {
         likeBookRepository.save(likeBook);
     }
 
-    public void deleteLikeBook(Long bno, Long uno){
+    public void deleteLikeBook(Long bno, Long uno) {
         likeBookRepository.deleteLikeBookByNo(bno, uno);
+    }
+
+    public Page<Book> getBookRanking(Pageable pageable) {
+        return bookRepository.findAll(pageable);
     }
 }
 

@@ -212,7 +212,7 @@ public class ChallengeAppService {
             List<WeekResponse.TodayDetail> todayDetails = new ArrayList<>();
             for (ChaekiToday today : week.getTodayList()) {
                 LocalDate date = today.getCreatedAt();
-                if (week.included(date)) {
+                if (week.included(date) && member.isWritten(today)) {
                     todayDetails.add(WeekResponse.TodayDetail.from(today));
                 }
             }

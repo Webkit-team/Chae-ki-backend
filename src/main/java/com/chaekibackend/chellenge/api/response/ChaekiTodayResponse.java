@@ -14,6 +14,7 @@ public class ChaekiTodayResponse {
         private Long no;
         private String challengeName;
         private String bookName;
+        private String nickName;
         private String content;
         private Integer readingPage;
         private Integer readingTime;
@@ -26,6 +27,7 @@ public class ChaekiTodayResponse {
                     .no(chaekiToday.getNo())
                     .challengeName(chaekiToday.getChallengeMember().getChallenge().getName())
                     .bookName(chaekiToday.getChallengeMember().getChallenge().getBook().getName())
+                    .nickName(chaekiToday.getChallengeMember().getUsers().getNickname())
                     .content(chaekiToday.getContent())
                     .readingPage(chaekiToday.getReadingPage())
                     .readingTime(chaekiToday.getReadingTime())

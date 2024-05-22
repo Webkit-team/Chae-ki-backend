@@ -36,4 +36,8 @@ public class ChallengeMember {
                 .challenge(challenge)
                 .build();
     }
+
+    public boolean isWritten(ChaekiToday today) {
+        return today.getChallengeMember().getNo() == this.no;
+    }
 }

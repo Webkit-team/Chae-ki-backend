@@ -99,7 +99,7 @@ public class TodayAppService {
     }
 
     public List<ChaekiTodayResponse.Detail> getTodayList() {
-        Page<ChaekiToday> todays = chaekiTodayService.fetchTodayList(PageRequest.of(0, 10));
+        Page<ChaekiToday> todays = chaekiTodayService.fetchTodayList(PageRequest.of(0, 6));
         return todays
                 .get()
                 .map(ChaekiTodayResponse.Detail::from)

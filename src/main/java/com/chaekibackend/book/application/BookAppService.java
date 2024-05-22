@@ -7,6 +7,9 @@ import com.chaekibackend.users.domain.entity.Users;
 import com.chaekibackend.users.domain.service.UsersService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
@@ -70,4 +73,12 @@ public class BookAppService {
         bookService.deleteLikeBook(bno, uno);
     }
 
+    public List<BookResponse.RankBook> getBookRanking() {
+        PageRequest pageable = PageRequest.of(0, 5, Sort.Direction.DESC, "likeCount");
+        Page<Book> bookRanking = bookService.getBookRanking(pageable);
+
+        return bookRanking.get()
+                .map(BookResponse.RankBook::from)
+                .toList();
+    }
 }

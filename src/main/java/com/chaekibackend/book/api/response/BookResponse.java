@@ -41,9 +41,9 @@ public class BookResponse {
 
             String translator = null;
 
-            if(writers.length > 1) {
+            if (writers.length > 1) {
                 String splicedStr = writers[1].substring((writers[1].indexOf(("("))));
-                translator = splicedStr.substring(2, splicedStr.length()-1);
+                translator = splicedStr.substring(2, splicedStr.length() - 1);
             }
 
             System.out.println("translator = " + translator);
@@ -83,7 +83,7 @@ public class BookResponse {
         private String isbnCode;
         private LocalDate publishDate;
 
-        public static BookResponse.Search from(Book book){
+        public static BookResponse.Search from(Book book) {
             return Search.builder()
                     .no(book.getNo())
                     .name(book.getName())
@@ -138,6 +138,21 @@ public class BookResponse {
                     .isbnCode(book.getIsbnCode())
                     .publishDate(book.getPublishDate())
                     .checkLike(false)
+                    .build();
+        }
+    }
+
+    @Builder
+    @AllArgsConstructor
+    @Getter
+    public static class RankBook {
+        private Long bookNo;
+        private String imageUrl;
+
+        public static RankBook from(Book book) {
+            return RankBook.builder()
+                    .bookNo(book.getNo())
+                    .imageUrl(book.getImageUrl())
                     .build();
         }
     }

@@ -51,4 +51,9 @@ public class BookController {
                                @PathVariable("uno") Long uno){
         bookAppService.deleteLikeBook(bno, uno);
     }
+
+    @GetMapping("/bookRank")
+    public List<BookResponse.RankBook> getBookRanking () {
+        return bookAppService.getBookRanking();
+    }
 }

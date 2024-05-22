@@ -72,7 +72,7 @@ public class ChallengeController {
     @Operation(summary = "챌린지 목록 조회", description = "페이지의 요소 개수, 페이지 번호, 챌린지 상태, 도서명, 저자명을 기준으로 챌린지 목록을 조회합니다.")
     public Page<ChallengeResponse.Retrieval> readAllChallenges(
             // todo: ChallengeSort enum을 매개변수로 받아서 처리하기
-            @PageableDefault(page = 0, size = 10, sort = "startDate", direction = Sort.Direction.DESC) Pageable pageable,
+            @PageableDefault(page = 0, size = 10, sort = "memberCount", direction = Sort.Direction.DESC) Pageable pageable,
             @RequestParam(defaultValue = "RECRUITING") String status,
             @RequestParam(required = false) String category, // 전달된 값이 없을 시, null 할당됨
             @RequestParam(required = false) String searchQuery // 전달된 값이 없을 시, null 할당됨
@@ -87,6 +87,7 @@ public class ChallengeController {
         return challengeAppService.readAllChallenges(pageable, status, category, searchQuery);
     }
 
+    // 위크 조회 API
     @GetMapping("/challenges/{cno}/week/{wno}")
     public WeekResponse.WeekInfo getWeek(
             @PathVariable("cno") Long challengeNo,

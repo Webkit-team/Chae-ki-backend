@@ -52,6 +52,7 @@ public class SecurityConfig {
                 .requestMatchers(HttpMethod.GET, "/today/list").permitAll()
                 .requestMatchers(HttpMethod.GET, "/challenges/{no}").permitAll()
                 .requestMatchers(HttpMethod.GET, "/challenges/{challengeNo}/week/{weekNumber}").permitAll()
+                .requestMatchers(HttpMethod.GET, "bookRank").permitAll()
                 .anyRequest().authenticated());
         http.sessionManagement(session -> session // 세션을 비상태로 설정
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS));

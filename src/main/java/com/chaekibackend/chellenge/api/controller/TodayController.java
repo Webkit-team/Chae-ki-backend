@@ -48,6 +48,7 @@ public class TodayController {
         return ResponseEntity.ok().build();
     }
 
+    // 메인 페이지 투데이 랭킹 조회
     @GetMapping("/today/list")
     public List<ChaekiTodayResponse.Detail> getTodayList() {
         return todayAppService.getTodayList();
