@@ -24,6 +24,7 @@ public class Challenge {
     private LocalDate startDate;
     @Setter
     private LocalDate endDate;
+
     private Integer memberCount;
     private String category;
     @Enumerated(EnumType.STRING)
@@ -50,5 +51,9 @@ public class Challenge {
                 .status(ChallengeStatus.RECRUITING)
                 .book(book)
                 .build();
+    }
+
+    public Integer getMemberCount() {
+        return this.memberList.size();
     }
 }
