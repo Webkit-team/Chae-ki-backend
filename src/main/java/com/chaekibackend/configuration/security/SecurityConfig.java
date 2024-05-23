@@ -45,7 +45,7 @@ public class SecurityConfig {
         http.httpBasic(AbstractHttpConfigurer::disable); // header에 아이디,비번 안 넣고, jwt 사용할 거라서
         http.authorizeHttpRequests(auth -> auth // 경로마다 인가 작업
                 .requestMatchers("/signup", "/userRank","/bookList", "/challenge", "/challenge/**",
-                        "/challenge/books/{word}", "/books/{bno}").permitAll()
+                        "/challenge/books/{word}").permitAll()
                 .requestMatchers("/login", "/", "/swagger-ui/**", "/v3/api-docs/**").permitAll()
                 .requestMatchers(HttpMethod.GET, "/challenges").permitAll()
                 .requestMatchers(HttpMethod.GET, "/users/duplication").permitAll()
@@ -53,6 +53,7 @@ public class SecurityConfig {
                 .requestMatchers(HttpMethod.GET, "/challenges/{no}").permitAll()
                 .requestMatchers(HttpMethod.GET, "/challenges/{challengeNo}/week/{weekNumber}").permitAll()
                 .requestMatchers(HttpMethod.GET, "bookRank").permitAll()
+                .requestMatchers(HttpMethod.GET, "/books/{bno}").permitAll()
                 .anyRequest().authenticated());
         http.sessionManagement(session -> session // 세션을 비상태로 설정
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS));

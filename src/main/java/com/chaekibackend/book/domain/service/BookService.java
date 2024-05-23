@@ -12,13 +12,16 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -122,6 +125,25 @@ public class BookService {
 
     public Page<Book> getBookRanking(Pageable pageable) {
         return bookRepository.findAll(pageable);
+    }
+
+    // 도서 상세 조회
+    public Book getBook(Long bookNo) {
+        Optional<Book> opt = bookRepository.findById(bookNo);
+        if(opt.isEmpty()) {
+            log.error("존재하지 않는 도서입니다.");
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "존재하지 않는 도서입니다.");
+        }
+
+        return opt.get();
+    }
+
+    public LikeBook getLikeBook(Long bookNo, Long userNo) {
+        return likeBookRepository.findLikeBookByNo(bookNo, userNo);
+    }
+
+    public void saveLikeBook(LikeBook likeBook) {
+        likeBookRepository.save(likeBook);
     }
 }
 

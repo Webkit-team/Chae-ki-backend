@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -17,6 +18,7 @@ public class LikeBook {
     @Id
     @GeneratedValue
     private Long no;
+    @Setter
     private LocalDate createdAt;
     @ManyToOne
     @JoinColumn(name="uno")

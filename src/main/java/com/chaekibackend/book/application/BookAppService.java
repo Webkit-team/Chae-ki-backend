@@ -2,6 +2,7 @@ package com.chaekibackend.book.application;
 
 import com.chaekibackend.book.api.response.BookResponse;
 import com.chaekibackend.book.domain.entity.Book;
+import com.chaekibackend.book.domain.entity.LikeBook;
 import com.chaekibackend.book.domain.service.BookService;
 import com.chaekibackend.users.domain.entity.Users;
 import com.chaekibackend.users.domain.service.UsersService;
@@ -14,6 +15,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -65,6 +67,11 @@ public class BookAppService {
 
     // 도서 찜 등록 기능
     public void createLikeBook(Long bno, Long uno){
+        if(bookService.readBookLike(bno, uno)) {
+            LikeBook likeBook = bookService.getLikeBook(bno, uno);
+            likeBook.setCreatedAt(LocalDate.now());
+            bookService.saveLikeBook(likeBook);
+        }
         bookService.createLikeBook(bno, uno);
     }
 
@@ -80,5 +87,18 @@ public class BookAppService {
         return bookRanking.get()
                 .map(BookResponse.RankBook::from)
                 .toList();
+    }
+
+    public BookResponse.Detail2 getBook(Long bookNo, Long userNo) {
+        Book book = bookService.getBook(bookNo);
+        BookResponse.Detail2 response = BookResponse.Detail2.from(book);
+
+        if(userNo != null) {
+            if(bookService.readBookLike(bookNo, userNo)) {
+                response.setCheckLike(true);
+            }
+        }
+
+        return response;
     }
 }

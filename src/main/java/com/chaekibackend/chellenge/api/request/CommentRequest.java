@@ -7,4 +7,9 @@ public class CommentRequest {
     public static class Register {
         private String content;
     }
+
+    @Getter
+    public static class Like {
+        private Boolean liked;
+    }
 }

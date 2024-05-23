@@ -71,4 +71,10 @@ public class CommentAppService {
 
         return CommentResponse.Register.from(savedComment);
     }
+
+    public CommentResponse.Like likeComment(Long commentNo, CommentRequest.Like request) {
+        ChaekiWeekComment comment = commentService.likeComment(commentNo, request.getLiked());
+
+        return CommentResponse.Like.from(comment);
+    }
 }

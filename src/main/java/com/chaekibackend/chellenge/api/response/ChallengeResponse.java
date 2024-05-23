@@ -19,6 +19,7 @@ public class ChallengeResponse {
         private Long no;
         private String name;
         private String description;
+        private ChallengeStatus status;
         private LocalDate startDate;
         private LocalDate endDate;
         private Integer memberCount;
@@ -31,6 +32,7 @@ public class ChallengeResponse {
                     .no(challenge.getNo())
                     .name(challenge.getName())
                     .description(challenge.getDescription())
+                    .status(challenge.getStatus())
                     .startDate(challenge.getStartDate())
                     .endDate(challenge.getEndDate())
                     .memberCount(challenge.getMemberCount())

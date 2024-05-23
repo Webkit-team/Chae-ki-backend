@@ -4,10 +4,7 @@ import com.chaekibackend.chellenge.api.request.CommentRequest;
 import com.chaekibackend.chellenge.api.response.CommentResponse;
 import com.chaekibackend.chellenge.application.CommentAppService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
@@ -22,5 +19,14 @@ public class CommentController {
             @RequestBody CommentRequest.Register request
             ) {
         return commentAppService.registerComment(userNo, challengeNo, request);
+    }
+
+    // 댓글 좋아요 API
+    @PutMapping("/like/comments/{commentNo}")
+    public CommentResponse.Like likeComment(
+            @PathVariable("commentNo") Long commentNo,
+            @RequestBody CommentRequest.Like request
+    ) {
+        return commentAppService.likeComment(commentNo, request);
     }
 }

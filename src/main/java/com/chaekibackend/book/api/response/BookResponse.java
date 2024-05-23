@@ -115,6 +115,7 @@ public class BookResponse {
         private Integer price;
         private String isbnCode;
         private LocalDate publishDate;
+        @Setter
         private Boolean checkLike;
 
         public static BookResponse.Detail2 from(Book book) {

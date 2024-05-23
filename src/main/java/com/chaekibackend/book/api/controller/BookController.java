@@ -22,19 +22,13 @@ public class BookController {
         return bookAppService.searchBook(word);
     }
 
-    // 비회원 도서 상세 조회
-    @Operation(summary = "도서 상세 조회", description = "도서 정보를 조회합니다.")
-    @GetMapping(value = "/books/{bno}")
-    public BookResponse.Detail readBookLogout(@PathVariable("bno") Long bno) {
-        return bookAppService.readBook(bno, null);
-    }
-
-    // 로그인한 회원 도서 상세 조회
-    @Operation(summary = "도서 상세 조회", description = "도서 정보를 조회합니다.")
-    @GetMapping(value = "/books/{bno}/users/{uno}")
-    public BookResponse.Detail readBookLogin(@PathVariable("bno") Long bno,
-                                             @PathVariable("uno") Long uno){
-        return bookAppService.readBook(bno, uno);
+    // 도서 상세 조회 API
+    @GetMapping("/books/{bookNo}")
+    public BookResponse.Detail2 getBook(
+            @PathVariable("bookNo") Long bookNo,
+            @RequestParam(value = "userNo", required = false) Long userNo
+    ){
+        return bookAppService.getBook(bookNo, userNo);
     }
 
     // 도서 찜 등록
@@ -45,6 +39,7 @@ public class BookController {
         bookAppService.createLikeBook(bno, uno);
     }
 
+    // 도서 찜 삭제
     @Operation(summary = "도서 찜 삭제", description = "선택된 도서를 사용자의 도서 찜 목록에서 삭제합니다.")
     @DeleteMapping(value="/books/{bno}/users/{uno}")
     public void deleteLikeBook(@PathVariable("bno") Long bno,

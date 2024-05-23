@@ -25,6 +25,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 
@@ -216,6 +217,7 @@ public class ChallengeAppService {
                     todayDetails.add(WeekResponse.TodayDetail.from(today));
                 }
             }
+            todayDetails.sort(Comparator.comparing(WeekResponse.TodayDetail::getCreatedAt));
             WeekResponse.TodayInfo todayInfo = WeekResponse.TodayInfo.from(member, todayDetails);
             resultTodays.add(todayInfo);
         }

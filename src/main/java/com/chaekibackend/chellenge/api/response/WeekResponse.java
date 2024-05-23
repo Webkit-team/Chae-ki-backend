@@ -58,6 +58,7 @@ public class WeekResponse {
         private String imageUrl;
         private String content;
         private Integer likeCount;
+        private Long userNo;
 
         public static CommentDetail from (ChaekiWeekComment comment) {
             return CommentDetail.builder()
@@ -66,6 +67,7 @@ public class WeekResponse {
                     .imageUrl(comment.getChallengeMember().getUsers().getImageUrl())
                     .content(comment.getContent())
                     .likeCount(comment.getLikeCount())
+                    .userNo(comment.getChallengeMember().getUsers().getNo())
                     .build();
         }
     }
