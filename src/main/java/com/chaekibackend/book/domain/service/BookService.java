@@ -8,6 +8,7 @@ import com.chaekibackend.book.domain.interfaces.LikeBookRepository;
 import com.chaekibackend.configuration.webClient.WebClientConfig;
 import com.chaekibackend.users.domain.entity.Users;
 import com.chaekibackend.users.domain.interfaces.UsersRepository;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -31,6 +32,7 @@ public class BookService {
     private final UsersRepository usersRepository;
     private final LikeBookRepository likeBookRepository;
 
+    @Transactional
     public List<Book> readAllBooks() {
         return bookRepository.findAll();
     }
@@ -89,15 +91,18 @@ public class BookService {
     }
 
     // 도서 상세 정보 조회
+    @Transactional
     public Book readBook(Long no) {
         return bookRepository.findByNo(no);
     }
 
+    @Transactional
     public List<Book> searchBook(String word) {
         return bookRepository.findByNameOrWriter(word);
     }
 
     // 등록된 도서 찜 내역이 있는지 확인(조회)하는 메서드
+    @Transactional
     public Boolean readBookLike(Long bno, Long uno) {
         LikeBook likeBook = likeBookRepository.findLikeBookByNo(bno, uno);
         if (likeBook != null) {
@@ -106,6 +111,7 @@ public class BookService {
             return false;
     }
 
+    @Transactional
     public void createLikeBook(Long bno, Long uno) {
         Book book = bookRepository.findByNo(bno);
         Users user = usersRepository.findByNo(uno);
@@ -119,14 +125,17 @@ public class BookService {
         likeBookRepository.save(likeBook);
     }
 
+    @Transactional
     public void deleteLikeBook(Long bno, Long uno) {
         likeBookRepository.deleteLikeBookByNo(bno, uno);
     }
 
+    @Transactional
     public Page<Book> getBookRanking(Pageable pageable) {
         return bookRepository.findAll(pageable);
     }
 
+    @Transactional
     // 도서 상세 조회
     public Book getBook(Long bookNo) {
         Optional<Book> opt = bookRepository.findById(bookNo);
@@ -138,12 +147,21 @@ public class BookService {
         return opt.get();
     }
 
+    @Transactional
     public LikeBook getLikeBook(Long bookNo, Long userNo) {
         return likeBookRepository.findLikeBookByNo(bookNo, userNo);
     }
 
+    @Transactional
     public void saveLikeBook(LikeBook likeBook) {
         likeBookRepository.save(likeBook);
+    }
+
+    @Transactional
+    public Page<Book> getFavoriteBooks(Long userNo, Pageable pageable) {
+        Page<LikeBook> likeBooks = likeBookRepository.findAllByUsersNo(userNo, pageable);
+
+        return likeBooks.map(LikeBook::getBook);
     }
 }
 

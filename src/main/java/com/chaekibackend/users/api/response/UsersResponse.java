@@ -1,10 +1,13 @@
 package com.chaekibackend.users.api.response;
 
+import com.chaekibackend.book.domain.entity.Book;
 import com.chaekibackend.users.domain.entity.Users;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
+
+import java.util.List;
 
 public class UsersResponse {
     @Builder
@@ -112,5 +115,31 @@ public class UsersResponse {
     @Getter
     public static class Duplication {
         private Boolean available;
+    }
+
+    @Builder
+    @AllArgsConstructor
+    @Getter
+    public static class FavoriteBooks {
+        private Long userNo;
+        private String nickName;
+        private List<FavoriteBookDetail> books;
+    }
+
+    @Builder
+    @AllArgsConstructor
+    @Getter
+    public static class FavoriteBookDetail {
+        private Long bookNo;
+        private String title;
+        private String imageUrl;
+
+        public static FavoriteBookDetail from (Book book) {
+            return FavoriteBookDetail.builder()
+                    .bookNo(book.getNo())
+                    .title(book.getName())
+                    .imageUrl(book.getImageUrl())
+                    .build();
+        }
     }
 }

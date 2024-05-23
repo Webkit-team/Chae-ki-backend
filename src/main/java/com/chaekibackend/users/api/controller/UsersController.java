@@ -82,4 +82,10 @@ public class UsersController {
         }
         return usersAppService.checkDuplication(username);
     }
+
+    // 마이페이지 도서 찜 목록 조회 API
+    @GetMapping("/users/{userNo}/favorite-books")
+    public UsersResponse.FavoriteBooks getFavoriteBooks(@PathVariable("userNo") Long userNo) {
+        return usersAppService.getFavoriteBooks(userNo);
+    }
 }

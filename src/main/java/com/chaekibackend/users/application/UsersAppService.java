@@ -1,5 +1,7 @@
 package com.chaekibackend.users.application;
 
+import com.chaekibackend.book.domain.entity.Book;
+import com.chaekibackend.book.domain.service.BookService;
 import com.chaekibackend.users.api.request.UsersRequest;
 import com.chaekibackend.users.api.response.UsersResponse;
 import com.chaekibackend.users.domain.entity.Users;
@@ -7,6 +9,9 @@ import com.chaekibackend.users.domain.service.S3Service;
 import com.chaekibackend.users.domain.service.UsersService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -21,6 +26,7 @@ public class UsersAppService {
     private final UsersService usersService;
     private final S3Service s3Service;
     private final PasswordEncoder passwordEncoder;
+    private final BookService bookService;
 
     public UsersResponse.Detail readUser(Long uno) {
         Users fountUser = usersService.readByNo(uno);
@@ -83,6 +89,23 @@ public class UsersAppService {
         return UsersResponse.Duplication
                 .builder()
                 .available(canUse)
+                .build();
+    }
+
+    public UsersResponse.FavoriteBooks getFavoriteBooks(Long userNo) {
+        Users user = usersService.readByNo(userNo);
+        PageRequest pageable = PageRequest.of(0, 10, Sort.by("createdAt").descending());
+        Page<Book> favoriteBooks = bookService.getFavoriteBooks(userNo, pageable);
+
+        List<UsersResponse.FavoriteBookDetail> resultBooks = favoriteBooks.get()
+                .map(UsersResponse.FavoriteBookDetail::from)
+                .toList();
+
+        return UsersResponse.FavoriteBooks
+                .builder()
+                .userNo(user.getNo())
+                .nickName(user.getNickname())
+                .books(resultBooks)
                 .build();
     }
 }
